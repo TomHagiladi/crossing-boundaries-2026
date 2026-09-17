@@ -47,8 +47,13 @@ body{background:#2a2925;overflow:hidden;font-family:var(--body);color:var(--ink)
 /* ---- type ladder: exactly three ranks --------------------------------- */
 .eyebrow{font-family:var(--mono);font-size:14px;font-weight:500;
   letter-spacing:.16em;text-transform:uppercase;color:var(--ink-soft)}
+/* opsz 72, not 96, and -.015em tracking - restored to exactly what v1 had.
+   Fraunces's optical-size axis is a real design axis: as it rises the letters
+   get finer and higher-contrast. At 96 the title lost the weight that made
+   the descenders break the boundary convincingly. Measured, not guessed:
+   the ink width fell from the full column to 701px. */
 h1{font-family:var(--display);font-size:86px;font-weight:600;
-  font-variation-settings:"opsz" 96;line-height:1.02;letter-spacing:-.018em}
+  font-variation-settings:"opsz" 72;line-height:1.02;letter-spacing:-.015em}
 h2{font-family:var(--display);font-size:40px;font-weight:600;
   font-variation-settings:"opsz" 48;line-height:1.1}
 .statement{font-family:var(--display);font-size:52px;font-weight:600;
@@ -149,8 +154,8 @@ body.static #bar,body.static #num,body.static #help{display:none}
      illustration runs the other. Two boundaries meeting at right angles, on
      the slide that says boundaries are not only of one kind. -->
 <section class="slide" aria-label="Boundaries are not only between disciplines"
-  style="background:linear-gradient(to right,var(--paper) 0 620px,var(--field) 620px 100%)">
-  <div class="b bv" style="left:620px"></div>
+  style="background:linear-gradient(to right,var(--paper) 0 890px,var(--field) 890px 100%)">
+  <div class="b bv" style="left:890px"></div>
   <div class="seam-label">Framing &middot; 02</div>
   <div class="pad">
     <div class="eyebrow" style="position:absolute;left:64px;top:56px">Framing</div>
@@ -173,7 +178,7 @@ body.static #bar,body.static #num,body.static #help{display:none}
      items crosses it. The rhythm is the argument. -->
 <section class="slide" aria-label="Which boundaries"
   style="background:linear-gradient(to right,var(--field) 0 196px,var(--paper) 196px 100%)">
-  <div class="b bp" style="left:196px;top:212px;bottom:0"></div>
+  <div class="b bp" style="left:196px;top:256px;bottom:116px"></div>
   <div class="seam-label">Framing &middot; 03</div>
   <div class="pad">
     <div class="head">
@@ -229,8 +234,8 @@ body.static #bar,body.static #num,body.static #help{display:none}
      "They become designers". The text now sits wholly on paper and the
      illustration is what crosses. -->
 <section class="slide" aria-label="Heutagogy, self-determined learning"
-  style="background:linear-gradient(to right,var(--paper) 0 700px,var(--field) 700px 100%)">
-  <div class="b bv" style="left:700px"></div>
+  style="background:linear-gradient(to right,var(--paper) 0 934px,var(--field) 934px 100%)">
+  <div class="b bv" style="left:934px"></div>
   <div class="seam-label">Core Idea &middot; 05</div>
   <div class="pad">
     <div class="head" style="right:auto;width:700px">
@@ -314,7 +319,7 @@ body.static #bar,body.static #num,body.static #help{display:none}
      variations legible as choices. -->
 <section class="slide" aria-label="What each partner does"
   style="background:linear-gradient(to right,var(--field) 0 196px,var(--paper) 196px 100%)">
-  <div class="b bp" style="left:196px;top:212px;bottom:0"></div>
+  <div class="b bp" style="left:196px;top:252px;bottom:116px"></div>
   <div class="seam-label">Core Idea &middot; 07</div>
   <div class="pad">
     <div class="head">
@@ -360,28 +365,28 @@ body.static #bar,body.static #num,body.static #help{display:none}
          lower third of the slide empty; a timeline uses the whole height and
          says "sequence" without a single arrow. -->
     <div class="f">
-      <div class="pin" style="left:180px;top:390px">01</div>
+      <div class="pin" style="left:180px;top:388px">01</div>
       <div class="col" style="left:88px;width:266px;bottom:352px;text-align:right">
         <div class="ct">Initiate</div>
         <p class="sm">A boundary&#8209;crossing question, topic or issue.</p>
       </div>
     </div>
     <div class="f">
-      <div class="pin onfield" style="left:468px;top:390px">02</div>
+      <div class="pin onfield" style="left:468px;top:388px">02</div>
       <div class="col" style="left:376px;width:266px;top:452px">
         <div class="ct">Explore</div>
         <p class="sm">Resources, and manage a dialogue with GenAI.</p>
       </div>
     </div>
     <div class="f">
-      <div class="pin" style="left:756px;top:390px">03</div>
+      <div class="pin" style="left:756px;top:388px">03</div>
       <div class="col" style="left:664px;width:266px;bottom:352px;text-align:right">
         <div class="ct">Reflect</div>
         <p class="sm">Connect disciplines, cultures and perspectives.</p>
       </div>
     </div>
     <div class="f">
-      <div class="pin onfield" style="left:1044px;top:390px">04</div>
+      <div class="pin onfield" style="left:1044px;top:388px">04</div>
       <div class="col" style="left:952px;width:266px;top:452px">
         <div class="ct">Share</div>
         <p class="sm">Insights, and a curiosity spark.</p>
@@ -399,8 +404,8 @@ body.static #bar,body.static #num,body.static #help{display:none}
      enough", which read as an error. The statement is now whole, and the
      vessel is what crosses. -->
 <section class="slide" aria-label="The time principle"
-  style="background:linear-gradient(to right,var(--paper) 0 640px,var(--field) 640px 100%)">
-  <div class="b bv" style="left:640px"></div>
+  style="background:linear-gradient(to right,var(--paper) 0 896px,var(--field) 896px 100%)">
+  <div class="b bv" style="left:896px"></div>
   <div class="seam-label">The Journey &middot; 09</div>
   <div class="pad">
     <div class="col" style="left:64px;width:556px;top:224px">
@@ -418,8 +423,8 @@ body.static #bar,body.static #num,body.static #help{display:none}
 <!-- 10 - HOW WE WORK ----------------------------------------------------
      VERTICAL at 690. In v1 the horizontal rule cut the last line in half. -->
 <section class="slide" aria-label="Instructions, how we work"
-  style="background:linear-gradient(to right,var(--paper) 0 690px,var(--field) 690px 100%)">
-  <div class="b bv" style="left:690px"></div>
+  style="background:linear-gradient(to right,var(--paper) 0 929px,var(--field) 929px 100%)">
+  <div class="b bv" style="left:929px"></div>
   <div class="seam-label">Instructions &middot; 10</div>
   <div class="pad">
     <div class="head" style="right:auto;width:700px">
@@ -483,10 +488,10 @@ body.static #bar,body.static #num,body.static #help{display:none}
      TWO PARALLEL VERTICALS, partial: they start below the heading so they
      never cut it, and run to the foot. Three columns, two boundaries. -->
 <section class="slide" aria-label="Prompt scaffolds"
-  style="background:linear-gradient(to right,var(--paper) 0 448px,var(--field) 448px 832px,
-         var(--paper) 832px 100%)">
-  <div class="b bp" style="left:448px;top:196px;bottom:0"></div>
-  <div class="b bp" style="left:832px;top:196px;bottom:0"></div>
+  style="background:linear-gradient(to right,var(--paper) 0 437px,var(--field) 437px 843px,
+         var(--paper) 843px 100%)">
+  <div class="b bp" style="left:437px;top:196px;bottom:0"></div>
+  <div class="b bp" style="left:843px;top:196px;bottom:0"></div>
   <div class="seam-label">Scaffolds &middot; 12</div>
   <div class="pad">
     <div class="head">
@@ -524,7 +529,7 @@ body.static #bar,body.static #num,body.static #help{display:none}
   <div class="b bh" style="top:352px"></div>
   <div class="seam-label">The Share &middot; 13</div>
   <div class="pad">
-    <div class="col" style="left:64px;right:64px;top:150px">
+    <div class="col" style="left:64px;right:64px;top:206px">
       <p class="f statement">Share in <span class="accent">2 minutes</span></p>
     </div>
     <div class="col" style="left:64px;right:64px;top:400px;
@@ -565,8 +570,8 @@ body.static #bar,body.static #num,body.static #help{display:none}
      VERTICAL at 760, with the QR panel straddling it. The code is the thing
      that carries them across, so the code is the thing that crosses. -->
 <section class="slide" aria-label="Start, scan the code"
-  style="background:linear-gradient(to right,var(--paper) 0 760px,var(--field) 760px 100%)">
-  <div class="b bv" style="left:760px"></div>
+  style="background:linear-gradient(to right,var(--paper) 0 820px,var(--field) 820px 100%)">
+  <div class="b bv" style="left:820px"></div>
   <div class="seam-label">Start &middot; 14</div>
   <div class="pad">
     <div class="col" style="left:64px;width:600px;top:186px">
