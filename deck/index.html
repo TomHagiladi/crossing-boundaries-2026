@@ -76,7 +76,7 @@ strong{font-weight:600}
 /* A numbered marker that sits centred ON a vertical boundary. */
 .pin{position:absolute;width:56px;text-align:center;font-family:var(--mono);
   font-size:15px;font-weight:500;letter-spacing:.06em;color:var(--accent);
-  background:var(--paper);padding:6px 0;z-index:5}
+  background:var(--paper);border:1px solid var(--ink);padding:5px 0;z-index:5}
 .pin.onfield{background:var(--field)}
 
 .card{padding-top:18px;border-top:2px solid var(--ink)}
@@ -91,9 +91,8 @@ img.ill{display:block;width:100%;height:100%;object-fit:contain}
 
 #bar{position:absolute;left:0;bottom:0;height:3px;background:var(--accent);
   width:0;z-index:8;transition:width .3s ease}
-#num{position:absolute;right:18px;bottom:13px;font-family:var(--mono);
-  font-size:12px;color:var(--ink-soft);z-index:8;direction:ltr;unicode-bidi:isolate}
-.seam-label{position:absolute;left:0;bottom:13px;width:100%;text-align:center;
+#num{display:none}
+.seam-label{position:absolute;right:20px;bottom:13px;text-align:right;
   font-family:var(--mono);font-size:12px;font-weight:500;letter-spacing:.14em;
   text-transform:uppercase;color:var(--ink-soft);z-index:8}
 #help{position:absolute;left:18px;bottom:13px;font-family:var(--mono);
@@ -125,7 +124,7 @@ body.static #bar,body.static #num,body.static #help{display:none}
   <div class="pad">
     <div class="eyebrow" style="position:absolute;left:64px;top:56px">Experiential Workshop</div>
     <h1 style="position:absolute;left:64px;right:64px;top:112px">
-      Crossing<br>Learning Boundaries
+      <span class="accent">Crossing</span><br>Learning Boundaries
     </h1>
     <p class="sm" style="position:absolute;left:68px;top:322px;color:var(--ink-soft)">
       through Heutagogy and Generative AI
@@ -178,27 +177,29 @@ body.static #bar,body.static #num,body.static #help{display:none}
      items crosses it. The rhythm is the argument. -->
 <section class="slide" aria-label="Which boundaries"
   style="background:linear-gradient(to right,var(--field) 0 196px,var(--paper) 196px 100%)">
-  <div class="b bp" style="left:196px;top:256px;bottom:116px"></div>
+  <div class="b bp" style="left:196px;top:260px;bottom:124px"></div>
   <div class="seam-label">Framing &middot; 03</div>
   <div class="pad">
     <div class="head">
       <div class="eyebrow">Framing</div>
       <h2>What boundaries are we crossing?</h2>
     </div>
+    <!-- Marker tops at 276 / 412 / 548 - a constant 136px step. They were
+         128 then 156 apart, which the eye reads as a mistake. -->
     <div class="f">
-      <div class="pin onfield" style="left:169px;top:272px">01</div>
-      <p class="col" style="left:268px;right:72px;top:272px">
+      <div class="pin onfield" style="left:169px;top:276px">01</div>
+      <p class="col" style="left:268px;right:72px;top:276px">
         <strong>Cultures, regions, professions,</strong> and communities.</p>
     </div>
     <div class="f">
-      <div class="pin onfield" style="left:169px;top:400px">02</div>
-      <p class="col" style="left:268px;right:72px;top:400px">
+      <div class="pin onfield" style="left:169px;top:412px">02</div>
+      <p class="col" style="left:268px;right:72px;top:412px">
         <strong>Ways of learning:</strong> observing, questioning, experiencing,
         dialoguing, reflecting.</p>
     </div>
     <div class="f">
-      <div class="pin onfield" style="left:169px;top:556px">03</div>
-      <p class="col" style="left:268px;right:72px;top:556px">
+      <div class="pin onfield" style="left:169px;top:548px">03</div>
+      <p class="col" style="left:268px;right:72px;top:548px">
         <strong>Modes of expression:</strong> text, image, map, story, podcast, video.</p>
     </div>
   </div>
@@ -215,16 +216,20 @@ body.static #bar,body.static #num,body.static #help{display:none}
        transform-origin:50% 50%;transform:rotate(-22deg)"></div>
   <div class="seam-label">Framing &middot; 04</div>
   <div class="pad">
-    <div class="col" style="right:56px;top:96px;width:500px;height:520px;z-index:2">
-      <img class="ill" src="assets/gen/threshold.png"
-           alt="A single continuous route climbs diagonally, passes through a freestanding
-                doorway and carries on unbroken, with three figures at three stages of it.">
-    </div>
-    <div class="col" style="left:64px;width:640px;top:192px">
+    <!-- The diagonal cuts the frame into two pentagons. Their centroids were
+         integrated numerically: the light region above is centred on
+         (487, 211), the region below on (793, 509). Each block sits on its
+         own centroid rather than being placed by eye. -->
+    <div class="col" style="left:177px;top:96px;width:620px">
       <p class="statement">
         The workshop invites<br><span class="accent">movement across</span><br>
         content, method,<br>perspective, and media.
       </p>
+    </div>
+    <div class="col" style="left:558px;top:304px;width:470px;height:410px;z-index:2">
+      <img class="ill" src="assets/gen/threshold.png"
+           alt="A single continuous route climbs diagonally, passes through a freestanding
+                doorway and carries on unbroken, with three figures at three stages of it.">
     </div>
   </div>
 </section>
@@ -238,19 +243,19 @@ body.static #bar,body.static #num,body.static #help{display:none}
   <div class="b bv" style="left:934px"></div>
   <div class="seam-label">Core Idea &middot; 05</div>
   <div class="pad">
-    <div class="head" style="right:auto;width:700px">
+    <div class="head" style="right:auto;width:820px">
       <div class="eyebrow">Core Idea</div>
-      <h2>Heutagogy: self&#8209;determined learning</h2>
+      <h2>Heutagogy:<br>self&#8209;determined learning</h2>
     </div>
-    <div class="col" style="left:64px;width:600px;top:250px">
+    <div class="col" style="left:64px;width:600px;top:318px">
       <p class="f statement" style="font-size:44px">
         Participants are not only<br>receivers of content.
       </p>
-      <p class="f statement" style="font-size:44px;margin-top:34px">
+      <p class="f statement" style="font-size:44px;margin-top:32px">
         They become <span class="accent">designers</span><br>of a short learning journey.
       </p>
     </div>
-    <div class="col" style="left:636px;top:196px;width:596px;height:400px;z-index:2">
+    <div class="col" style="left:636px;top:206px;width:596px;height:400px;z-index:2">
       <img class="ill" src="assets/gen/designer.png"
            alt="On the left a figure follows a path already drawn for them; on the right a
                 figure crouches and draws their own path in a different direction.">
@@ -264,50 +269,60 @@ body.static #bar,body.static #num,body.static #help{display:none}
      through the words "Emerging understanding" at an arbitrary height, which
      is the collision Tom pointed at. -->
 <section class="slide" aria-label="The learner, GenAI and learning companion triangle"
-  style="background:linear-gradient(to bottom,var(--paper) 0 456px,var(--field) 456px 100%)">
-  <div class="b bh" style="top:456px"></div>
+  style="background:linear-gradient(to bottom,var(--paper) 0 572px,var(--field) 572px 100%)">
+  <div class="b bh" style="top:572px"></div>
   <div class="seam-label">Core Idea &middot; 06</div>
   <div class="pad">
     <div class="head">
       <div class="eyebrow">Core Idea</div>
       <h2>Three partners, one emerging understanding</h2>
     </div>
-    <svg viewBox="0 0 1152 400" style="position:absolute;left:64px;top:208px;
-         width:1152px;height:400px;z-index:4" role="img"
-         aria-label="A triangle whose vertices are Learners, GenAI and Learning companion,
-                     with Emerging understanding at the centre. Its base rests on the
-                     slide's boundary line.">
+    <!-- A true equilateral: base 390, so height is 390*sqrt(3)/2 = 337.7. The
+         apex stays where it was at vy 84, so the base falls to vy 422, which is
+         page y 572 - and that is where the boundary is drawn. The SVG does not
+         draw the base; the boundary IS the base. Edge names now sit beneath
+         their own vertex instead of running along the strokes. -->
+    <svg viewBox="0 0 1152 560" style="position:absolute;left:64px;top:150px;
+         width:1152px;height:560px;z-index:4" role="img"
+         aria-label="An equilateral triangle whose vertices are Learners, GenAI and Learning
+                     companion, with Emerging understanding at the centre. Its base rests on
+                     the slide boundary line.">
       <g class="f">
-        <line x1="576" y1="68" x2="286" y2="248" stroke="#15171C" stroke-width="2"/>
-        <line x1="576" y1="68" x2="866" y2="248" stroke="#15171C" stroke-width="2"/>
-        <circle cx="576" cy="68" r="7" fill="#1E4B8F"/>
-        <circle cx="286" cy="248" r="7" fill="#1E4B8F"/>
-        <circle cx="866" cy="248" r="7" fill="#1E4B8F"/>
+        <line x1="576" y1="84" x2="381" y2="422" stroke="#15171C" stroke-width="3.5"/>
+        <line x1="576" y1="84" x2="771" y2="422" stroke="#15171C" stroke-width="3.5"/>
+        <circle cx="576" cy="84" r="8" fill="#1E4B8F"/>
+        <circle cx="381" cy="422" r="8" fill="#1E4B8F"/>
+        <circle cx="771" cy="422" r="8" fill="#1E4B8F"/>
       </g>
-      <g class="f" font-family="IBM Plex Sans" fill="#15171C">
-        <text x="576" y="16" font-size="15" fill="#474C56" text-anchor="middle"
+      <g class="f" font-family="IBM Plex Sans" fill="#15171C" text-anchor="middle">
+        <text x="576" y="12" font-size="15" fill="#474C56"
               font-family="IBM Plex Mono" letter-spacing="1.6">GENERATE THE LEARNING</text>
-        <text x="576" y="48" font-size="28" font-weight="600" text-anchor="middle">Learners</text>
-        <text x="286" y="292" font-size="28" font-weight="600" text-anchor="middle">GenAI</text>
-        <text x="286" y="320" font-size="15" fill="#474C56" text-anchor="middle"
+        <text x="576" y="46" font-size="29" font-weight="600">Learners</text>
+        <text x="576" y="70" font-size="15" fill="#1E4B8F"
+              font-family="IBM Plex Mono" letter-spacing="1.6">CHALLENGE</text>
+      </g>
+      <g class="f" font-family="IBM Plex Sans" fill="#15171C" text-anchor="middle">
+        <text x="381" y="462" font-size="15" fill="#474C56"
               font-family="IBM Plex Mono" letter-spacing="1.6">A DIALOGIC PARTNER</text>
-        <text x="866" y="292" font-size="28" font-weight="600" text-anchor="middle">Learning companion</text>
-        <text x="866" y="320" font-size="15" fill="#474C56" text-anchor="middle"
+        <text x="381" y="496" font-size="29" font-weight="600">GenAI</text>
+        <text x="381" y="522" font-size="15" fill="#1E4B8F"
+              font-family="IBM Plex Mono" letter-spacing="1.6">DIALOGUE</text>
+        <text x="771" y="462" font-size="15" fill="#474C56"
               font-family="IBM Plex Mono" letter-spacing="1.6">REVEALS CURIOSITY</text>
+        <text x="771" y="496" font-size="29" font-weight="600">Learning companion</text>
+        <text x="771" y="522" font-size="15" fill="#1E4B8F"
+              font-family="IBM Plex Mono" letter-spacing="1.6">REFLECTION</text>
       </g>
-      <g class="f" font-family="IBM Plex Mono" font-size="15" fill="#1E4B8F" letter-spacing="1.4">
-        <text x="416" y="148" text-anchor="middle" transform="rotate(-31.8 416 148)">DIALOGUE</text>
-        <text x="736" y="148" text-anchor="middle" transform="rotate(31.8 736 148)">CHALLENGE</text>
-        <text x="576" y="224" text-anchor="middle">REFLECTION</text>
-      </g>
-      <g class="f">
-        <text x="576" y="166" font-size="26" font-weight="600" text-anchor="middle"
+      <g class="f" text-anchor="middle">
+        <text x="576" y="300" font-size="26" font-weight="600"
               font-family="Fraunces" fill="#15171C">Emerging</text>
-        <text x="576" y="196" font-size="26" font-weight="600" text-anchor="middle"
+        <text x="576" y="332" font-size="26" font-weight="600"
               font-family="Fraunces" fill="#15171C">understanding</text>
       </g>
     </svg>
-    <p class="eyebrow" style="position:absolute;right:64px;bottom:52px">
+    <!-- Bottom LEFT. Centred, it landed exactly between DIALOGUE and
+         REFLECTION, which both sit low on the base vertices. -->
+    <p class="eyebrow" style="position:absolute;left:64px;bottom:34px">
       Hagiladi &amp; Glassner, 2026
     </p>
   </div>
@@ -319,7 +334,7 @@ body.static #bar,body.static #num,body.static #help{display:none}
      variations legible as choices. -->
 <section class="slide" aria-label="What each partner does"
   style="background:linear-gradient(to right,var(--field) 0 196px,var(--paper) 196px 100%)">
-  <div class="b bp" style="left:196px;top:252px;bottom:116px"></div>
+  <div class="b bp" style="left:196px;top:252px;bottom:132px"></div>
   <div class="seam-label">Core Idea &middot; 07</div>
   <div class="pad">
     <div class="head">
@@ -327,20 +342,20 @@ body.static #bar,body.static #num,body.static #help{display:none}
       <h2>What each partner does</h2>
     </div>
     <div class="f">
-      <div class="pin onfield" style="left:169px;top:268px">&#9679;</div>
+      <div class="pin onfield" style="left:169px;top:268px">&#9650;</div>
       <p class="col" style="left:268px;right:72px;top:268px">
         <strong>Learners</strong> decide what to learn, how, from what,
         and how to represent.</p>
     </div>
     <div class="f">
-      <div class="pin onfield" style="left:169px;top:392px">&#9632;</div>
-      <p class="col" style="left:268px;right:72px;top:392px">
+      <div class="pin onfield" style="left:169px;top:404px">&#9650;</div>
+      <p class="col" style="left:268px;right:72px;top:404px">
         <strong>GenAI</strong> expands questions, perspectives, connections,
         synthesis, analysis, representation and evaluation of knowledge.</p>
     </div>
     <div class="f">
-      <div class="pin onfield" style="left:169px;top:556px">&#9650;</div>
-      <p class="col" style="left:268px;right:72px;top:556px">
+      <div class="pin onfield" style="left:169px;top:540px">&#9650;</div>
+      <p class="col" style="left:268px;right:72px;top:540px">
         <strong>The learning companion</strong> reveals curiosity and aids
         thinking and reflection.</p>
     </div>
@@ -360,42 +375,37 @@ body.static #bar,body.static #num,body.static #help{display:none}
       <div class="eyebrow">From idea to shared curiosity</div>
       <h2>The workshop journey</h2>
     </div>
-    <!-- The journey is a sequence, so the boundary runs ALONG it as a spine
-         and the four moves alternate above and below. A static shelf left the
-         lower third of the slide empty; a timeline uses the whole height and
-         says "sequence" without a single arrow. -->
+    <!-- The first word of each move is part of its sentence, so it stays inline
+         in the same face and is marked by colour alone. Blocks are centred on
+         their own marker. The time principle moved out - it is the whole of
+         the next slide. -->
     <div class="f">
       <div class="pin" style="left:180px;top:388px">01</div>
-      <div class="col" style="left:88px;width:266px;bottom:352px;text-align:right">
-        <div class="ct">Initiate</div>
-        <p class="sm">A boundary&#8209;crossing question, topic or issue.</p>
+      <div class="col" style="left:75px;width:266px;bottom:352px;text-align:center">
+        <p class="sm"><span class="accent">Initiate</span> a boundary&#8209;crossing
+          question, topic or issue.</p>
       </div>
     </div>
     <div class="f">
-      <div class="pin onfield" style="left:468px;top:388px">02</div>
-      <div class="col" style="left:376px;width:266px;top:452px">
-        <div class="ct">Explore</div>
-        <p class="sm">Resources, and manage a dialogue with GenAI.</p>
+      <div class="pin" style="left:468px;top:388px">02</div>
+      <div class="col" style="left:363px;width:266px;top:452px;text-align:center">
+        <p class="sm"><span class="accent">Explore</span> resources, and manage a
+          dialogue with GenAI.</p>
       </div>
     </div>
     <div class="f">
       <div class="pin" style="left:756px;top:388px">03</div>
-      <div class="col" style="left:664px;width:266px;bottom:352px;text-align:right">
-        <div class="ct">Reflect</div>
-        <p class="sm">Connect disciplines, cultures and perspectives.</p>
+      <div class="col" style="left:651px;width:266px;bottom:352px;text-align:center">
+        <p class="sm"><span class="accent">Reflect</span> on and connect disciplines,
+          cultures and perspectives.</p>
       </div>
     </div>
     <div class="f">
-      <div class="pin onfield" style="left:1044px;top:388px">04</div>
-      <div class="col" style="left:952px;width:266px;top:452px">
-        <div class="ct">Share</div>
-        <p class="sm">Insights, and a curiosity spark.</p>
+      <div class="pin" style="left:1044px;top:388px">04</div>
+      <div class="col" style="left:939px;width:266px;top:452px;text-align:center">
+        <p class="sm"><span class="accent">Share</span> insights, and a curiosity spark.</p>
       </div>
     </div>
-    <p class="col eyebrow" style="left:64px;bottom:58px;right:64px;line-height:1.7">
-      Time principle &mdash; keep the inquiry small enough to complete,
-      but rich enough to cross a boundary.
-    </p>
   </div>
 </section>
 
@@ -404,15 +414,21 @@ body.static #bar,body.static #num,body.static #help{display:none}
      enough", which read as an error. The statement is now whole, and the
      vessel is what crosses. -->
 <section class="slide" aria-label="The time principle"
-  style="background:linear-gradient(to right,var(--paper) 0 896px,var(--field) 896px 100%)">
-  <div class="b bv" style="left:896px"></div>
+  style="background:linear-gradient(to bottom,var(--paper) 0 360px,var(--field) 360px 100%)">
+  <div class="b bh" style="top:360px"></div>
   <div class="seam-label">The Journey &middot; 09</div>
   <div class="pad">
-    <div class="col" style="left:64px;width:556px;top:224px">
-      <p class="f statement" style="font-size:45px">Keep the inquiry<br><span class="accent">small enough</span><br>to complete,</p>
-      <p class="f statement" style="font-size:45px;margin-top:34px">but <span class="accent">rich enough</span><br>to cross a boundary.</p>
+    <!-- The illustration is 528 tall and starts at y 96, so its own centre is
+         exactly 360 - the boundary passes through the middle of the drawing. -->
+    <div class="col" style="left:64px;width:540px;bottom:392px">
+      <p class="f statement" style="font-size:45px">Keep the inquiry<br>
+        <span class="accent">small enough</span> to complete,</p>
     </div>
-    <div class="col" style="left:560px;top:96px;width:672px;height:528px;z-index:2">
+    <div class="col" style="left:64px;width:540px;top:400px">
+      <p class="f statement" style="font-size:45px">but <span class="accent">rich enough</span><br>
+        to cross a boundary.</p>
+    </div>
+    <div class="col" style="left:620px;top:96px;width:600px;height:528px;z-index:2">
       <img class="ill" src="assets/gen/vessel.png"
            alt="A small shallow vessel from which a large, intricate branching structure
                 rises, far richer than the vessel that holds it.">
@@ -423,11 +439,11 @@ body.static #bar,body.static #num,body.static #help{display:none}
 <!-- 10 - HOW WE WORK ----------------------------------------------------
      VERTICAL at 690. In v1 the horizontal rule cut the last line in half. -->
 <section class="slide" aria-label="Instructions, how we work"
-  style="background:linear-gradient(to right,var(--paper) 0 929px,var(--field) 929px 100%)">
-  <div class="b bv" style="left:929px"></div>
+  style="background:linear-gradient(to right,var(--paper) 0 700px,var(--field) 700px 100%)">
+  <div class="b bv" style="left:700px"></div>
   <div class="seam-label">Instructions &middot; 10</div>
   <div class="pad">
-    <div class="head" style="right:auto;width:700px">
+    <div class="head" style="right:auto;width:640px">
       <div class="eyebrow">Small&#8209;group inquiry</div>
       <h2>Instructions for participants</h2>
     </div>
@@ -438,7 +454,9 @@ body.static #bar,body.static #num,body.static #help{display:none}
       <p class="f" style="margin-top:26px">Take one shared question, or individual subtopics
         connected to one theme.</p>
     </div>
-    <div class="col" style="left:626px;top:212px;width:606px;height:400px;z-index:2">
+    <!-- Centred in the band between the rule and the slide edge: 54px of air on
+         the left of the box, 54px on the right. -->
+    <div class="col" style="left:754px;top:190px;width:472px;height:340px;z-index:2">
       <img class="ill" src="assets/gen/table.png"
            alt="Three figures gathered closely around one shared surface, each leaning toward
                 a single object between them.">
@@ -532,36 +550,29 @@ body.static #bar,body.static #num,body.static #help{display:none}
     <div class="col" style="left:64px;right:64px;top:206px">
       <p class="f statement">Share in <span class="accent">2 minutes</span></p>
     </div>
-    <div class="col" style="left:64px;right:64px;top:400px;
-         display:grid;grid-template-columns:repeat(3,1fr);gap:64px">
-      <div class="f">
-        <div class="ct" style="font-family:var(--mono);font-size:14px;font-weight:500;
-             letter-spacing:.14em;text-transform:uppercase;color:var(--accent);
-             margin-bottom:12px">One insight</div>
+    <!-- Each mark now lives INSIDE its own fragment, so it arrives with its
+         sentence instead of all three sitting there from the start. The same
+         square appears in the app and on the projected board. -->
+    <div class="f">
+      <div class="pin" style="left:207px;top:334px;font-size:19px">&#9632;</div>
+      <div class="col" style="left:64px;width:341px;top:400px">
+        <div class="ct">One insight</div>
         <p>From what you learned, or from the process itself.</p>
       </div>
-      <div class="f">
-        <div class="ct" style="font-family:var(--mono);font-size:14px;font-weight:500;
-             letter-spacing:.14em;text-transform:uppercase;color:var(--accent);
-             margin-bottom:12px">One connection</div>
+    </div>
+    <div class="f">
+      <div class="pin" style="left:612px;top:334px;font-size:19px">&#9632;</div>
+      <div class="col" style="left:469px;width:341px;top:400px">
+        <div class="ct">One connection</div>
         <p>To your discipline, your work, or your own life.</p>
       </div>
-      <div class="f">
-        <div class="ct" style="font-family:var(--mono);font-size:14px;font-weight:500;
-             letter-spacing:.14em;text-transform:uppercase;color:var(--accent);
-             margin-bottom:12px">One question</div>
+    </div>
+    <div class="f">
+      <div class="pin" style="left:1017px;top:334px;font-size:19px">&#9632;</div>
+      <div class="col" style="left:875px;width:341px;top:400px">
+        <div class="ct">One question</div>
         <p>That may spark curiosity in others.</p>
       </div>
-    </div>
-    <!-- the three marks, each centred on the boundary -->
-    <div style="position:absolute;left:64px;right:64px;top:333px;
-         display:grid;grid-template-columns:repeat(3,1fr);gap:64px;z-index:5">
-      <div style="font-size:24px;color:var(--accent);background:var(--paper);
-           width:44px;text-align:center;padding:4px 0">&#9679;</div>
-      <div style="font-size:24px;color:var(--accent);background:var(--paper);
-           width:44px;text-align:center;padding:4px 0">&#9632;</div>
-      <div style="font-size:24px;color:var(--accent);background:var(--paper);
-           width:44px;text-align:center;padding:4px 0">&#9650;</div>
     </div>
   </div>
 </section>
@@ -574,13 +585,17 @@ body.static #bar,body.static #num,body.static #help{display:none}
   <div class="b bv" style="left:820px"></div>
   <div class="seam-label">Start &middot; 14</div>
   <div class="pad">
-    <div class="col" style="left:64px;width:600px;top:186px">
+    <div class="col" style="left:64px;width:660px;top:170px">
       <p class="statement">Everything you need<br>is in the <span class="accent">app.</span></p>
-      <p style="margin-top:38px">Scan the code, or type the address.</p>
-      <p class="eyebrow" style="margin-top:34px;line-height:1.9">
-        tomhagiladi.github.io/crossing&#8209;boundaries&#8209;2026
+      <p style="margin-top:36px">Scan the code, or type the address.</p>
+      <!-- The address is the fallback for anyone whose camera will not scan,
+           so it is set as large as the body text and in full ink. -->
+      <p style="margin-top:26px;font-family:var(--mono);font-size:25px;font-weight:500;
+                color:var(--ink);border-top:2px solid var(--ink);padding-top:18px;
+                line-height:1.35;word-break:keep-all">
+        tomhagiladi.github.io/<br>crossing&#8209;boundaries&#8209;2026
       </p>
-      <p class="eyebrow" style="margin-top:26px;line-height:1.9">
+      <p class="eyebrow" style="margin-top:30px;line-height:1.9">
         Questions afterwards<br>amnonglassner55@gmail.com
       </p>
     </div>
@@ -588,7 +603,8 @@ body.static #bar,body.static #num,body.static #help{display:none}
          background:var(--paper);border:2px solid var(--ink);display:flex;
          align-items:center;justify-content:center;z-index:5">
       <!--QR_SVG-->
-      <span class="eyebrow" style="text-align:center;padding:20px">QR code<br>injected at build</span>
+      <svg aria-hidden="true" style="width:290px;height:290px" version="1.1" viewBox="0 0 37 37" xmlns="http://www.w3.org/2000/svg"><path d="M2,2H3V3H2zM3,2H4V3H3zM4,2H5V3H4zM5,2H6V3H5zM6,2H7V3H6zM7,2H8V3H7zM8,2H9V3H8zM12,2H13V3H12zM20,2H21V3H20zM21,2H22V3H21zM22,2H23V3H22zM23,2H24V3H23zM25,2H26V3H25zM28,2H29V3H28zM29,2H30V3H29zM30,2H31V3H30zM31,2H32V3H31zM32,2H33V3H32zM33,2H34V3H33zM34,2H35V3H34zM2,3H3V4H2zM8,3H9V4H8zM12,3H13V4H12zM17,3H18V4H17zM18,3H19V4H18zM19,3H20V4H19zM20,3H21V4H20zM22,3H23V4H22zM23,3H24V4H23zM28,3H29V4H28zM34,3H35V4H34zM2,4H3V5H2zM4,4H5V5H4zM5,4H6V5H5zM6,4H7V5H6zM8,4H9V5H8zM10,4H11V5H10zM12,4H13V5H12zM16,4H17V5H16zM18,4H19V5H18zM20,4H21V5H20zM21,4H22V5H21zM22,4H23V5H22zM23,4H24V5H23zM24,4H25V5H24zM26,4H27V5H26zM28,4H29V5H28zM30,4H31V5H30zM31,4H32V5H31zM32,4H33V5H32zM34,4H35V5H34zM2,5H3V6H2zM4,5H5V6H4zM5,5H6V6H5zM6,5H7V6H6zM8,5H9V6H8zM10,5H11V6H10zM19,5H20V6H19zM20,5H21V6H20zM22,5H23V6H22zM24,5H25V6H24zM26,5H27V6H26zM28,5H29V6H28zM30,5H31V6H30zM31,5H32V6H31zM32,5H33V6H32zM34,5H35V6H34zM2,6H3V7H2zM4,6H5V7H4zM5,6H6V7H5zM6,6H7V7H6zM8,6H9V7H8zM10,6H11V7H10zM11,6H12V7H11zM12,6H13V7H12zM13,6H14V7H13zM15,6H16V7H15zM16,6H17V7H16zM17,6H18V7H17zM18,6H19V7H18zM19,6H20V7H19zM21,6H22V7H21zM23,6H24V7H23zM24,6H25V7H24zM25,6H26V7H25zM28,6H29V7H28zM30,6H31V7H30zM31,6H32V7H31zM32,6H33V7H32zM34,6H35V7H34zM2,7H3V8H2zM8,7H9V8H8zM10,7H11V8H10zM12,7H13V8H12zM13,7H14V8H13zM15,7H16V8H15zM16,7H17V8H16zM20,7H21V8H20zM24,7H25V8H24zM26,7H27V8H26zM28,7H29V8H28zM34,7H35V8H34zM2,8H3V9H2zM3,8H4V9H3zM4,8H5V9H4zM5,8H6V9H5zM6,8H7V9H6zM7,8H8V9H7zM8,8H9V9H8zM10,8H11V9H10zM12,8H13V9H12zM14,8H15V9H14zM16,8H17V9H16zM18,8H19V9H18zM20,8H21V9H20zM22,8H23V9H22zM24,8H25V9H24zM26,8H27V9H26zM28,8H29V9H28zM29,8H30V9H29zM30,8H31V9H30zM31,8H32V9H31zM32,8H33V9H32zM33,8H34V9H33zM34,8H35V9H34zM10,9H11V10H10zM11,9H12V10H11zM12,9H13V10H12zM13,9H14V10H13zM16,9H17V10H16zM18,9H19V10H18zM23,9H24V10H23zM24,9H25V10H24zM2,10H3V11H2zM4,10H5V11H4zM5,10H6V11H5zM6,10H7V11H6zM7,10H8V11H7zM8,10H9V11H8zM11,10H12V11H11zM13,10H14V11H13zM14,10H15V11H14zM15,10H16V11H15zM16,10H17V11H16zM19,10H20V11H19zM24,10H25V11H24zM26,10H27V11H26zM28,10H29V11H28zM29,10H30V11H29zM30,10H31V11H30zM31,10H32V11H31zM32,10H33V11H32zM2,11H3V12H2zM3,11H4V12H3zM4,11H5V12H4zM5,11H6V12H5zM7,11H8V12H7zM9,11H10V12H9zM10,11H11V12H10zM12,11H13V12H12zM13,11H14V12H13zM15,11H16V12H15zM18,11H19V12H18zM21,11H22V12H21zM22,11H23V12H22zM23,11H24V12H23zM25,11H26V12H25zM28,11H29V12H28zM29,11H30V12H29zM31,11H32V12H31zM32,11H33V12H32zM33,11H34V12H33zM34,11H35V12H34zM2,12H3V13H2zM6,12H7V13H6zM8,12H9V13H8zM9,12H10V13H9zM10,12H11V13H10zM11,12H12V13H11zM14,12H15V13H14zM15,12H16V13H15zM16,12H17V13H16zM17,12H18V13H17zM18,12H19V13H18zM19,12H20V13H19zM26,12H27V13H26zM27,12H28V13H27zM28,12H29V13H28zM30,12H31V13H30zM32,12H33V13H32zM33,12H34V13H33zM5,13H6V14H5zM6,13H7V14H6zM9,13H10V14H9zM10,13H11V14H10zM11,13H12V14H11zM14,13H15V14H14zM15,13H16V14H15zM17,13H18V14H17zM20,13H21V14H20zM21,13H22V14H21zM22,13H23V14H22zM23,13H24V14H23zM26,13H27V14H26zM27,13H28V14H27zM30,13H31V14H30zM31,13H32V14H31zM32,13H33V14H32zM33,13H34V14H33zM34,13H35V14H34zM2,14H3V15H2zM3,14H4V15H3zM7,14H8V15H7zM8,14H9V15H8zM11,14H12V15H11zM12,14H13V15H12zM13,14H14V15H13zM16,14H17V15H16zM18,14H19V15H18zM19,14H20V15H19zM20,14H21V15H20zM21,14H22V15H21zM22,14H23V15H22zM24,14H25V15H24zM25,14H26V15H25zM26,14H27V15H26zM27,14H28V15H27zM29,14H30V15H29zM30,14H31V15H30zM31,14H32V15H31zM33,14H34V15H33zM34,14H35V15H34zM2,15H3V16H2zM3,15H4V16H3zM4,15H5V16H4zM5,15H6V16H5zM6,15H7V16H6zM9,15H10V16H9zM13,15H14V16H13zM17,15H18V16H17zM20,15H21V16H20zM21,15H22V16H21zM25,15H26V16H25zM28,15H29V16H28zM29,15H30V16H29zM32,15H33V16H32zM33,15H34V16H33zM34,15H35V16H34zM2,16H3V17H2zM7,16H8V17H7zM8,16H9V17H8zM10,16H11V17H10zM12,16H13V17H12zM13,16H14V17H13zM15,16H16V17H15zM17,16H18V17H17zM18,16H19V17H18zM23,16H24V17H23zM26,16H27V17H26zM27,16H28V17H27zM28,16H29V17H28zM30,16H31V17H30zM31,16H32V17H31zM33,16H34V17H33zM2,17H3V18H2zM3,17H4V18H3zM5,17H6V18H5zM7,17H8V18H7zM9,17H10V18H9zM10,17H11V18H10zM12,17H13V18H12zM13,17H14V18H13zM16,17H17V18H16zM17,17H18V18H17zM20,17H21V18H20zM21,17H22V18H21zM23,17H24V18H23zM24,17H25V18H24zM25,17H26V18H25zM27,17H28V18H27zM28,17H29V18H28zM31,17H32V18H31zM32,17H33V18H32zM4,18H5V19H4zM6,18H7V19H6zM8,18H9V19H8zM10,18H11V19H10zM11,18H12V19H11zM13,18H14V19H13zM15,18H16V19H15zM16,18H17V19H16zM17,18H18V19H17zM19,18H20V19H19zM24,18H25V19H24zM25,18H26V19H25zM26,18H27V19H26zM27,18H28V19H27zM29,18H30V19H29zM30,18H31V19H30zM31,18H32V19H31zM34,18H35V19H34zM2,19H3V20H2zM3,19H4V20H3zM5,19H6V20H5zM9,19H10V20H9zM11,19H12V20H11zM12,19H13V20H12zM13,19H14V20H13zM16,19H17V20H16zM18,19H19V20H18zM19,19H20V20H19zM20,19H21V20H20zM21,19H22V20H21zM25,19H26V20H25zM27,19H28V20H27zM28,19H29V20H28zM29,19H30V20H29zM31,19H32V20H31zM32,19H33V20H32zM34,19H35V20H34zM2,20H3V21H2zM3,20H4V21H3zM4,20H5V21H4zM5,20H6V21H5zM6,20H7V21H6zM8,20H9V21H8zM9,20H10V21H9zM10,20H11V21H10zM11,20H12V21H11zM12,20H13V21H12zM17,20H18V21H17zM19,20H20V21H19zM22,20H23V21H22zM23,20H24V21H23zM29,20H30V21H29zM30,20H31V21H30zM32,20H33V21H32zM33,20H34V21H33zM2,21H3V22H2zM3,21H4V22H3zM5,21H6V22H5zM6,21H7V22H6zM7,21H8V22H7zM9,21H10V22H9zM12,21H13V22H12zM13,21H14V22H13zM15,21H16V22H15zM16,21H17V22H16zM18,21H19V22H18zM23,21H24V22H23zM24,21H25V22H24zM28,21H29V22H28zM29,21H30V22H29zM30,21H31V22H30zM31,21H32V22H31zM32,21H33V22H32zM34,21H35V22H34zM2,22H3V23H2zM4,22H5V23H4zM6,22H7V23H6zM7,22H8V23H7zM8,22H9V23H8zM10,22H11V23H10zM11,22H12V23H11zM14,22H15V23H14zM15,22H16V23H15zM20,22H21V23H20zM21,22H22V23H21zM22,22H23V23H22zM24,22H25V23H24zM25,22H26V23H25zM26,22H27V23H26zM27,22H28V23H27zM29,22H30V23H29zM30,22H31V23H30zM31,22H32V23H31zM2,23H3V24H2zM3,23H4V24H3zM5,23H6V24H5zM10,23H11V24H10zM11,23H12V24H11zM12,23H13V24H12zM13,23H14V24H13zM15,23H16V24H15zM17,23H18V24H17zM18,23H19V24H18zM19,23H20V24H19zM20,23H21V24H20zM21,23H22V24H21zM25,23H26V24H25zM28,23H29V24H28zM32,23H33V24H32zM34,23H35V24H34zM2,24H3V25H2zM4,24H5V25H4zM5,24H6V25H5zM6,24H7V25H6zM7,24H8V25H7zM8,24H9V25H8zM12,24H13V25H12zM14,24H15V25H14zM15,24H16V25H15zM16,24H17V25H16zM20,24H21V25H20zM22,24H23V25H22zM23,24H24V25H23zM24,24H25V25H24zM27,24H28V25H27zM29,24H30V25H29zM30,24H31V25H30zM31,24H32V25H31zM33,24H34V25H33zM2,25H3V26H2zM5,25H6V26H5zM7,25H8V26H7zM9,25H10V26H9zM10,25H11V26H10zM11,25H12V26H11zM13,25H14V26H13zM14,25H15V26H14zM18,25H19V26H18zM20,25H21V26H20zM22,25H23V26H22zM23,25H24V26H23zM30,25H31V26H30zM31,25H32V26H31zM32,25H33V26H32zM33,25H34V26H33zM34,25H35V26H34zM2,26H3V27H2zM4,26H5V27H4zM5,26H6V27H5zM6,26H7V27H6zM8,26H9V27H8zM11,26H12V27H11zM12,26H13V27H12zM13,26H14V27H13zM15,26H16V27H15zM16,26H17V27H16zM19,26H20V27H19zM21,26H22V27H21zM24,26H25V27H24zM26,26H27V27H26zM27,26H28V27H27zM28,26H29V27H28zM29,26H30V27H29zM30,26H31V27H30zM33,26H34V27H33zM10,27H11V28H10zM11,27H12V28H11zM12,27H13V28H12zM13,27H14V28H13zM16,27H17V28H16zM19,27H20V28H19zM21,27H22V28H21zM22,27H23V28H22zM23,27H24V28H23zM26,27H27V28H26zM30,27H31V28H30zM32,27H33V28H32zM33,27H34V28H33zM34,27H35V28H34zM2,28H3V29H2zM3,28H4V29H3zM4,28H5V29H4zM5,28H6V29H5zM6,28H7V29H6zM7,28H8V29H7zM8,28H9V29H8zM12,28H13V29H12zM14,28H15V29H14zM15,28H16V29H15zM17,28H18V29H17zM19,28H20V29H19zM23,28H24V29H23zM24,28H25V29H24zM25,28H26V29H25zM26,28H27V29H26zM28,28H29V29H28zM30,28H31V29H30zM32,28H33V29H32zM33,28H34V29H33zM2,29H3V30H2zM8,29H9V30H8zM10,29H11V30H10zM16,29H17V30H16zM19,29H20V30H19zM20,29H21V30H20zM22,29H23V30H22zM23,29H24V30H23zM24,29H25V30H24zM25,29H26V30H25zM26,29H27V30H26zM30,29H31V30H30zM31,29H32V30H31zM32,29H33V30H32zM33,29H34V30H33zM34,29H35V30H34zM2,30H3V31H2zM4,30H5V31H4zM5,30H6V31H5zM6,30H7V31H6zM8,30H9V31H8zM10,30H11V31H10zM12,30H13V31H12zM13,30H14V31H13zM16,30H17V31H16zM17,30H18V31H17zM18,30H19V31H18zM24,30H25V31H24zM26,30H27V31H26zM27,30H28V31H27zM28,30H29V31H28zM29,30H30V31H29zM30,30H31V31H30zM31,30H32V31H31zM2,31H3V32H2zM4,31H5V32H4zM5,31H6V32H5zM6,31H7V32H6zM8,31H9V32H8zM10,31H11V32H10zM11,31H12V32H11zM12,31H13V32H12zM13,31H14V32H13zM15,31H16V32H15zM17,31H18V32H17zM20,31H21V32H20zM21,31H22V32H21zM23,31H24V32H23zM24,31H25V32H24zM25,31H26V32H25zM27,31H28V32H27zM30,31H31V32H30zM33,31H34V32H33zM34,31H35V32H34zM2,32H3V33H2zM4,32H5V33H4zM5,32H6V33H5zM6,32H7V33H6zM8,32H9V33H8zM10,32H11V33H10zM12,32H13V33H12zM14,32H15V33H14zM15,32H16V33H15zM17,32H18V33H17zM18,32H19V33H18zM22,32H23V33H22zM23,32H24V33H23zM25,32H26V33H25zM28,32H29V33H28zM29,32H30V33H29zM31,32H32V33H31zM32,32H33V33H32zM2,33H3V34H2zM8,33H9V34H8zM12,33H13V34H12zM14,33H15V34H14zM15,33H16V34H15zM16,33H17V34H16zM17,33H18V34H17zM21,33H22V34H21zM23,33H24V34H23zM24,33H25V34H24zM25,33H26V34H25zM27,33H28V34H27zM28,33H29V34H28zM30,33H31V34H30zM31,33H32V34H31zM32,33H33V34H32zM2,34H3V35H2zM3,34H4V35H3zM4,34H5V35H4zM5,34H6V35H5zM6,34H7V35H6zM7,34H8V35H7zM8,34H9V35H8zM10,34H11V35H10zM12,34H13V35H12zM14,34H15V35H14zM17,34H18V35H17zM19,34H20V35H19zM24,34H25V35H24zM25,34H26V35H25zM26,34H27V35H26zM27,34H28V35H27zM28,34H29V35H28zM29,34H30V35H29zM33,34H34V35H33z" id="qr-path" fill="#15171C" fill-opacity="1" fill-rule="nonzero" stroke="none"/></svg>
+    
     </div>
   </div>
 </section>
