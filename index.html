@@ -7,17 +7,16 @@
 <title>Crossing Learning Boundaries — Workshop Companion</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,300..900&family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500;600;700&family=IBM+Plex+Sans+Hebrew:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Alef:wght@400;700&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
 <style>
 :root{
   --paper:#F5F1E8; --field:#E3DCCC; --ink:#15171C; --ink-soft:#474C56;
   --accent:#1E4B8F; --accent-soft:#8FA4C4;
-  --display:"Fraunces",Georgia,serif;
-  --body:"IBM Plex Sans","IBM Plex Sans Hebrew",system-ui,sans-serif;
-  --mono:"IBM Plex Mono",ui-monospace,monospace;
+  --display:"Alef",system-ui,sans-serif;
+  --body:"Alef",system-ui,sans-serif;
+  --mono:"IBM Plex Mono","Alef",ui-monospace,monospace;
   --seam:2px;
 }
-html[lang="he"]{ --body:"IBM Plex Sans Hebrew","IBM Plex Sans",system-ui,sans-serif; }
 *{box-sizing:border-box;margin:0;padding:0}
 html,body{background:var(--field)}
 body{font-family:var(--body);color:var(--ink);line-height:1.55;font-size:17px;
@@ -48,6 +47,20 @@ header{position:sticky;top:0;z-index:20;background:var(--paper);
 .ticks i.now{background:var(--ink)}
 
 main{max-width:640px;margin:0 auto;padding:0 18px 140px}
+@media (min-width:760px){
+  main{max-width:720px;padding:0 28px 150px}
+  body{font-size:18px}
+  h1{font-size:38px}
+  .hrow,.ticks,.nrow{max-width:720px}
+}
+@media (min-width:1080px){
+  main{max-width:1000px}
+  h1{font-size:42px}
+  .hrow,.ticks,.nrow{max-width:1000px}
+  /* the dialogue deck is the one station with enough cards to justify it */
+  #prompts{display:grid;grid-template-columns:1fr 1fr;gap:0 20px;align-items:start}
+  .station[data-s="1"] .card,.station[data-s="2"] .card{max-width:none}
+}
 /* The station card crosses the seam: it starts above the rule's own band. */
 .station{display:none;padding-top:26px}
 .station.on{display:block;animation:rise .3s ease}
@@ -56,9 +69,9 @@ main{max-width:640px;margin:0 auto;padding:0 18px 140px}
 
 .eyebrow{font-family:var(--mono);font-size:11px;font-weight:500;letter-spacing:.16em;
   text-transform:uppercase;color:var(--accent)}
-h1{font-family:var(--display);font-size:33px;font-weight:600;line-height:1.14;
+h1{font-family:var(--display);font-size:32px;font-weight:700;line-height:1.2;
   letter-spacing:-.01em;margin:9px 0 14px}
-h2{font-family:var(--display);font-size:22px;font-weight:600;margin:26px 0 10px}
+h2{font-family:var(--display);font-size:21px;font-weight:700;margin:26px 0 10px}
 p{margin:0 0 13px}
 .lead{font-size:18px}
 .muted{color:var(--ink-soft);font-size:15px}
@@ -66,13 +79,18 @@ p{margin:0 0 13px}
 .card{background:var(--paper);border:2px solid var(--ink);border-radius:14px;
   padding:16px 17px;margin:14px 0}
 .card.soft{border-color:var(--accent-soft)}
-.card h3{font-family:var(--body);font-size:17px;font-weight:600;margin:0 0 7px}
+.card h3{font-family:var(--body);font-size:17px;font-weight:700;margin:0 0 7px}
 .ct{font-family:var(--mono);font-size:11px;font-weight:500;letter-spacing:.14em;
   text-transform:uppercase;color:var(--accent);margin-bottom:8px}
 
 .prompt{font-family:var(--mono);font-size:14px;line-height:1.6;background:var(--field);
   border-radius:9px;padding:13px 14px;margin:10px 0;white-space:pre-wrap;
   word-break:break-word}
+a.tool{display:inline-block;font-weight:700;color:var(--accent);
+  text-decoration:none;border-bottom:2px solid var(--accent-soft);
+  padding:2px 0;margin-inline-end:4px}
+a.tool:active{border-bottom-color:var(--accent)}
+.tools{margin:10px 0 2px;line-height:2.2}
 .copy{display:inline-flex;align-items:center;gap:8px;font-family:var(--mono);
   font-size:12px;font-weight:500;letter-spacing:.08em;text-transform:uppercase;
   background:var(--ink);color:var(--paper);border:0;border-radius:999px;
@@ -87,7 +105,7 @@ li{margin-bottom:7px}
   font:inherit;color:inherit;cursor:pointer;min-height:44px}
 .choice[aria-pressed="true"]{background:var(--accent);color:var(--paper);border-color:var(--accent)}
 .choice[aria-pressed="true"] .muted{color:#d5dded}
-.choice b{display:block;font-weight:600;margin-bottom:3px}
+.choice b{display:block;font-weight:700;margin-bottom:3px}
 
 label{display:block;font-family:var(--mono);font-size:11px;font-weight:500;
   letter-spacing:.14em;text-transform:uppercase;color:var(--accent);margin:16px 0 6px}
@@ -188,9 +206,30 @@ nav.bottom{position:fixed;inset-inline:0;bottom:0;z-index:20;background:var(--pa
     <button class="copy" type="button" data-copy="s2p"></button>
   </div>
   <h2 data-i="s2media"></h2>
-  <div class="card soft"><h3 data-i="s2m1"></h3><p class="muted" data-i="s2m1d"></p></div>
-  <div class="card soft"><h3 data-i="s2m2"></h3><p class="muted" data-i="s2m2d"></p></div>
-  <div class="card soft"><h3 data-i="s2m3"></h3><p class="muted" data-i="s2m3d"></p></div>
+  <!-- Plain https links on purpose. A phone treats these as universal links,
+       so the installed app opens if there is one and the website opens if
+       there is not. A custom scheme like chatgpt:// would simply fail for
+       anyone who has not installed it. -->
+  <div class="card soft">
+    <h3 data-i="s2m1"></h3><p class="muted" data-i="s2m1d"></p>
+    <div class="tools">
+      <a class="tool" href="https://chatgpt.com" target="_blank" rel="noopener">ChatGPT</a>
+      <a class="tool" href="https://gemini.google.com/app" target="_blank" rel="noopener">Gemini</a>
+      <a class="tool" href="https://claude.ai/new" target="_blank" rel="noopener">Claude</a>
+    </div>
+  </div>
+  <div class="card soft">
+    <h3 data-i="s2m2"></h3><p class="muted" data-i="s2m2d"></p>
+    <div class="tools">
+      <a class="tool" href="https://www.youtube.com" target="_blank" rel="noopener">YouTube</a>
+    </div>
+  </div>
+  <div class="card soft">
+    <h3 data-i="s2m3"></h3><p class="muted" data-i="s2m3d"></p>
+    <div class="tools">
+      <a class="tool" href="https://notebooklm.google.com" target="_blank" rel="noopener">NotebookLM</a>
+    </div>
+  </div>
   <div class="note"><b data-i="s2limitb"></b> <span data-i="s2limit"></span></div>
 </section>
 
@@ -209,6 +248,13 @@ nav.bottom{position:fixed;inset-inline:0;bottom:0;z-index:20;background:var(--pa
   <h1 id="t4" data-i="s4title"></h1>
   <div class="note"><b data-i="s4stopb"></b> <span data-i="s4stop"></span></div>
   <p class="lead" data-i="s4lead"></p>
+  <!-- This card is the pay-off for the choice made back at station 1. Without
+       it the choice would set a variable and change nothing, which is no
+       choice at all. -->
+  <div class="card" id="modecard" hidden>
+    <div class="ct" id="modect"></div>
+    <p id="modeq"></p>
+  </div>
   <div class="card">
     <div class="ct" data-i="s4qct"></div>
     <ul>
@@ -305,7 +351,7 @@ const STR = {
   s1cct:"If you are starting from nothing", s1ch:"Ask for a spread to choose from",
   s1cp:"I am an academic working in [your field], at a conference about crossing boundaries between disciplines, cultures and professions.\n\nSuggest eight questions or issues from outside my own field that could genuinely interest me. Each should be something I can taste in about twenty minutes - enough to get into it a little, not to exhaust it. For each one, add a sentence on why it might surprise someone from my field.",
   s1modes:"How will you work together?",
-  s1modeslead:"Decide this now. There is no wrong answer, and you can change it.",
+  s1modeslead:"Decide this now. There is no wrong answer, you can change it, and it decides the question you are asked at the end.",
   s1m1:"One shared question", s1m1d:"All of you follow the same question together.",
   s1m2:"One theme, personal questions", s1m2d:"A shared theme, and each of you takes the part that interests you.",
   s1m3:"Separate topics", s1m3d:"Different questions entirely. You are each other's sounding board.",
@@ -315,12 +361,12 @@ const STR = {
   s2lead:"Before you start gathering, decide what you actually want from this: to understand something, to explain it, to create, to decide, or simply to satisfy a curiosity. Then decide how you will learn it.",
   s2pct:"Ask the AI to help you plan, not to answer",
   s2p:"My question is: [your question].\n\nI learn well when [how you learn - reading, watching, arguing, making, seeing examples].\n\nGiven that: which ways of learning might suit this topic, and why? Which kinds of sources should I start with, and which should I save for later? Do not answer the question itself yet.",
-  s2media:"What is available to you right now",
-  s2m1:"A dialogue with an AI model", s2m1d:"Your own choice of tool. Copy a prompt from here and edit it.",
+  s2media:"Learning resources available to you, if you want to use them",
+  s2m1:"Talk it through with an AI model", s2m1d:"Your own choice of tool. Copy a prompt from here and edit it.",
   s2m2:"Video and audio", s2m2d:"Ask the model for the exact search terms to use on YouTube, or which podcasts cover this.",
   s2m3:"A NotebookLM notebook", s2m3d:"Ask which sources to gather, load them in, and let it build a mind map, a briefing or a short audio overview.",
-  s2limitb:"Today only:",
-  s2limit:"whatever is on your phone. You cannot go and visit, interview or experiment. That constraint is part of the exercise.",
+  s2limitb:"What you can and cannot do in the next twenty minutes.",
+  s2limit:"Normally, designing your own learning path could mean going somewhere, interviewing someone, or running an experiment. Here there is not time for any of that. Today your sources are whatever you can reach from the phone in your hand: an AI model, a video, a podcast, a search, and the people sitting with you. That restriction is deliberate. It is not the whole of heutagogy - it is the part of it that fits into twenty minutes.",
 
   s3eye:"Station 3", s3title:"Dialogue, not a query",
   s3ruleb:"The one rule that matters:",
@@ -387,7 +433,7 @@ const STR = {
   s1cct:"אם אתם מתחילים מאפס", s1ch:"בקשו מבחר לבחור ממנו",
   s1cp:"אני איש אקדמיה שעוסק ב[תחום שלך], בכנס שעוסק בחציית גבולות בין דיסציפלינות, תרבויות ומקצועות.\n\nהצע לי שמונה שאלות או סוגיות מחוץ לתחום שלי שיכולות באמת לעניין אותי. כל אחת צריכה להיות משהו שאפשר לטעום בכעשרים דקות - להיכנס קצת לעובי הקורה, לא למצות. לכל אחת הוסף משפט על מה בה עשוי להפתיע מישהו מהתחום שלי.",
   s1modes:"איך תעבדו יחד?",
-  s1modeslead:"תחליטו על זה עכשיו. אין תשובה נכונה, ואפשר לשנות.",
+  s1modeslead:"תחליטו על זה עכשיו. אין תשובה נכונה, אפשר לשנות, וזה קובע את השאלה שתקבלו בסוף.",
   s1m1:"שאלה משותפת אחת", s1m1d:"כולכם הולכים יחד אחרי אותה שאלה.",
   s1m2:"נושא משותף, שאלות אישיות", s1m2d:"נושא אחד, וכל אחד לוקח את החלק שמסקרן אותו.",
   s1m3:"נושאים נפרדים", s1m3d:"שאלות שונות לגמרי. אתם קרש התהודה אחד של השני.",
@@ -397,12 +443,12 @@ const STR = {
   s2lead:"לפני שמתחילים לאסוף, תחליטו מה אתם בעצם רוצים מזה: להבין משהו, להסביר, ליצור, להחליט, או פשוט לספק סקרנות. ואז תחליטו איך תלמדו את זה.",
   s2pct:"בקשו מהבינה לעזור לתכנן, לא לענות",
   s2p:"השאלה שלי היא: [השאלה שלך].\n\nאני לומד טוב כש[איך אתה לומד - קריאה, צפייה, ויכוח, עשייה, דוגמאות].\n\nבהינתן זה: אילו דרכי למידה עשויות להתאים לנושא הזה, ולמה? מאילו סוגי מקורות כדאי שאתחיל, ואילו כדאי לשמור להמשך? אל תענה עדיין על השאלה עצמה.",
-  s2media:"מה זמין לכם עכשיו",
-  s2m1:"דיאלוג עם מודל שפה", s2m1d:"הכלי שאתם בוחרים. העתיקו פרומפט מכאן וערכו אותו.",
+  s2media:"משאבי למידה שזמינים לכם, אם תרצו להשתמש בהם",
+  s2m1:"לדבר על זה עם מודל שפה", s2m1d:"הכלי שאתם בוחרים. העתיקו פרומפט מכאן וערכו אותו.",
   s2m2:"וידאו ואודיו", s2m2d:"בקשו מהמודל את מילות החיפוש המדויקות ליוטיוב, או אילו פודקאסטים עוסקים בזה.",
   s2m3:"מחברת NotebookLM", s2m3d:"בקשו אילו מקורות לאסוף, העלו אותם, ותנו לה לבנות מפת חשיבה, תדריך או סקירה קולית קצרה.",
-  s2limitb:"היום בלבד:",
-  s2limit:"מה שיש בטלפון. אי אפשר לצאת לבקר, לראיין או להתנסות. האילוץ הזה הוא חלק מהתרגיל.",
+  s2limitb:"מה אפשר ומה אי אפשר לעשות בעשרים הדקות הקרובות.",
+  s2limit:"בדרך כלל, לתכנן מסלול למידה משלכם יכול להיות לנסוע למקום, לראיין מישהו, או לערוך ניסוי. כאן אין זמן לשום אחד מהם. היום המקורות שלכם הם כל מה שאפשר להגיע אליו מהטלפון שביד: מודל שפה, סרטון, פודקאסט, חיפוש, והאנשים שיושבים איתכם. ההגבלה הזו מכוונת. זו אינה היוטגוגיה השלמה, אלא החלק שלה שנכנס לעשרים דקות.",
 
   s3eye:"תחנה 3", s3title:"דיאלוג, לא שאילתה",
   s3ruleb:"הכלל היחיד שחשוב:",
@@ -452,6 +498,28 @@ const STR = {
 const TITLES = { en:["Welcome","Choose","Path","Dialogue","Connect","Share","After"],
                  he:["פתיחה","בחירה","מסלול","דיאלוג","חיבור","שיתוף","סיום"] };
 
+/* What the station-1 choice actually changes: the closing conversation.
+   Three ways of working produce three genuinely different things to talk
+   about at the end, so the choice earns its place. */
+const MODEQ = {
+ en:{
+  shared:["You followed one question together",
+    "Where did the two or three of you read the same answer differently? That gap is usually the most interesting thing you found."],
+  theme:["You took different angles on one theme",
+    "Now that you have heard the others, what does the theme look like that it did not look like twenty minutes ago?"],
+  own:["You learned different things",
+    "What surprised you most in someone else's topic, and why did it surprise you and not them?"]
+ },
+ he:{
+  shared:["הלכתם יחד אחרי שאלה אחת",
+    "איפה שניים או שלושה מכם קראו את אותה תשובה אחרת? הפער הזה הוא בדרך כלל הדבר הכי מעניין שמצאתם."],
+  theme:["לקחתם זוויות שונות על נושא אחד",
+    "עכשיו, אחרי ששמעתם את האחרים, איך הנושא נראה אחרת ממה שהוא נראה לפני עשרים דקות?"],
+  own:["למדתם דברים שונים",
+    "מה הכי הפתיע אתכם בנושא של מישהו אחר, ולמה זה הפתיע דווקא אתכם ולא אותו?"]
+ }
+};
+
 const N = 7;
 let lang = 'en', s = 0, mode = null;
 
@@ -476,8 +544,26 @@ function paint(){
   $('#back').setAttribute('aria-label', d.back);
   $('#back').innerHTML = (lang === 'he') ? '&rarr;' : '&larr;';
   $$('.copy').forEach(b => { if (!b.classList.contains('done')) b.textContent = d.copy; });
+  paintMode();
   buildPrompts();
   paintNav();
+}
+
+/* Laptop, tablet or phone. The CSS breakpoints do the layout; this exposes
+   the same answer as a data attribute so behaviour can differ too. */
+function paintDevice(){
+  const w = innerWidth;
+  document.documentElement.dataset.device =
+    w >= 1080 ? 'desktop' : w >= 760 ? 'tablet' : 'phone';
+}
+
+function paintMode(){
+  const card = $('#modecard');
+  const m = mode && MODEQ[lang][mode];
+  if (!m){ card.hidden = true; return; }
+  card.hidden = false;
+  $('#modect').textContent = m[0];
+  $('#modeq').textContent  = m[1];
 }
 
 function buildPrompts(){
@@ -597,7 +683,9 @@ $('#send').addEventListener('click', send);
 $$('.choice').forEach(b => b.addEventListener('click', () => {
   mode = b.dataset.mode; store.set('mode', mode);
   $$('.choice').forEach(o => o.setAttribute('aria-pressed', String(o === b)));
+  paintMode();
 }));
+addEventListener('resize', paintDevice);
 $$('[data-copy]').forEach(b => b.addEventListener('click', () => {
   doCopy(b, STR[lang][b.dataset.copy]);
 }));
@@ -609,6 +697,7 @@ lang = store.get('lang', 'en');
 mode = store.get('mode', null);
 if (mode) $$('.choice').forEach(o => o.setAttribute('aria-pressed', String(o.dataset.mode === mode)));
 $('#gname').value = store.get('gname', '');
+paintDevice();
 paint();
 go(store.get('s', 0));
 flush();
