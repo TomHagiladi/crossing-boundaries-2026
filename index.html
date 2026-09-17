@@ -1,0 +1,617 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#F5F1E8">
+<title>Crossing Learning Boundaries — Workshop Companion</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,300..900&family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500;600;700&family=IBM+Plex+Sans+Hebrew:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --paper:#F5F1E8; --field:#E3DCCC; --ink:#15171C; --ink-soft:#474C56;
+  --accent:#1E4B8F; --accent-soft:#8FA4C4;
+  --display:"Fraunces",Georgia,serif;
+  --body:"IBM Plex Sans","IBM Plex Sans Hebrew",system-ui,sans-serif;
+  --mono:"IBM Plex Mono",ui-monospace,monospace;
+  --seam:2px;
+}
+html[lang="he"]{ --body:"IBM Plex Sans Hebrew","IBM Plex Sans",system-ui,sans-serif; }
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{background:var(--field)}
+body{font-family:var(--body);color:var(--ink);line-height:1.55;font-size:17px;
+     -webkit-text-size-adjust:100%}
+.sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;
+  clip:rect(0 0 0 0);white-space:nowrap;border:0}
+a.skip{position:absolute;inset-inline-start:-9999px;top:0;z-index:99;background:var(--ink);
+  color:var(--paper);padding:12px 18px;text-decoration:none}
+a.skip:focus{inset-inline-start:0}
+:focus-visible{outline:3px solid var(--accent);outline-offset:3px;border-radius:4px}
+
+/* ---- the seam, carried over from the deck ----------------------------- */
+header{position:sticky;top:0;z-index:20;background:var(--paper);
+  border-bottom:var(--seam) solid var(--ink);padding:10px 18px 9px;
+  padding-top:max(10px,env(safe-area-inset-top))}
+.hrow{display:flex;align-items:center;gap:12px;max-width:640px;margin:0 auto}
+.hlabel{font-family:var(--mono);font-size:11px;font-weight:500;letter-spacing:.14em;
+  text-transform:uppercase;color:var(--ink-soft);flex:1;min-width:0;
+  overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.hlabel b{color:var(--accent);font-weight:500}
+.langbtn{font-family:var(--mono);font-size:12px;font-weight:500;letter-spacing:.08em;
+  background:none;border:2px solid var(--ink);color:var(--ink);border-radius:999px;
+  padding:7px 15px;cursor:pointer;min-height:44px}
+.langbtn:active{background:var(--ink);color:var(--paper)}
+.ticks{display:flex;gap:4px;max-width:640px;margin:8px auto 0}
+.ticks i{flex:1;height:3px;background:var(--accent-soft);border-radius:2px}
+.ticks i.done{background:var(--accent)}
+.ticks i.now{background:var(--ink)}
+
+main{max-width:640px;margin:0 auto;padding:0 18px 140px}
+/* The station card crosses the seam: it starts above the rule's own band. */
+.station{display:none;padding-top:26px}
+.station.on{display:block;animation:rise .3s ease}
+@keyframes rise{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:none}}
+@media (prefers-reduced-motion:reduce){ .station.on{animation:none} }
+
+.eyebrow{font-family:var(--mono);font-size:11px;font-weight:500;letter-spacing:.16em;
+  text-transform:uppercase;color:var(--accent)}
+h1{font-family:var(--display);font-size:33px;font-weight:600;line-height:1.14;
+  letter-spacing:-.01em;margin:9px 0 14px}
+h2{font-family:var(--display);font-size:22px;font-weight:600;margin:26px 0 10px}
+p{margin:0 0 13px}
+.lead{font-size:18px}
+.muted{color:var(--ink-soft);font-size:15px}
+
+.card{background:var(--paper);border:2px solid var(--ink);border-radius:14px;
+  padding:16px 17px;margin:14px 0}
+.card.soft{border-color:var(--accent-soft)}
+.card h3{font-family:var(--body);font-size:17px;font-weight:600;margin:0 0 7px}
+.ct{font-family:var(--mono);font-size:11px;font-weight:500;letter-spacing:.14em;
+  text-transform:uppercase;color:var(--accent);margin-bottom:8px}
+
+.prompt{font-family:var(--mono);font-size:14px;line-height:1.6;background:var(--field);
+  border-radius:9px;padding:13px 14px;margin:10px 0;white-space:pre-wrap;
+  word-break:break-word}
+.copy{display:inline-flex;align-items:center;gap:8px;font-family:var(--mono);
+  font-size:12px;font-weight:500;letter-spacing:.08em;text-transform:uppercase;
+  background:var(--ink);color:var(--paper);border:0;border-radius:999px;
+  padding:0 18px;min-height:44px;cursor:pointer}
+.copy.done{background:var(--accent)}
+
+ul{margin:0 0 13px;padding-inline-start:22px}
+li{margin-bottom:7px}
+
+.choice{display:block;width:100%;text-align:start;background:var(--paper);
+  border:2px solid var(--ink);border-radius:12px;padding:14px 16px;margin:9px 0;
+  font:inherit;color:inherit;cursor:pointer;min-height:44px}
+.choice[aria-pressed="true"]{background:var(--accent);color:var(--paper);border-color:var(--accent)}
+.choice[aria-pressed="true"] .muted{color:#d5dded}
+.choice b{display:block;font-weight:600;margin-bottom:3px}
+
+label{display:block;font-family:var(--mono);font-size:11px;font-weight:500;
+  letter-spacing:.14em;text-transform:uppercase;color:var(--accent);margin:16px 0 6px}
+input[type=text],textarea{width:100%;font:inherit;font-size:17px;color:var(--ink);
+  background:var(--paper);border:2px solid var(--ink);border-radius:10px;
+  padding:12px 13px;min-height:48px;resize:vertical}
+textarea{min-height:88px}
+
+nav.bottom{position:fixed;inset-inline:0;bottom:0;z-index:20;background:var(--paper);
+  border-top:var(--seam) solid var(--ink);padding:11px 18px;
+  padding-bottom:max(11px,env(safe-area-inset-bottom))}
+.nrow{display:flex;gap:10px;max-width:640px;margin:0 auto}
+.btn{flex:1;font-family:var(--body);font-size:16px;font-weight:600;border-radius:999px;
+  padding:0 20px;min-height:50px;cursor:pointer;border:2px solid var(--ink)}
+.btn.prim{background:var(--ink);color:var(--paper)}
+.btn.ghost{background:transparent;color:var(--ink);flex:0 0 84px}
+.btn[disabled]{opacity:.35;cursor:default}
+
+.note{background:var(--accent);color:var(--paper);border-radius:12px;
+  padding:14px 16px;margin:16px 0;font-size:16px}
+.note b{font-weight:600}
+.status{font-family:var(--mono);font-size:13px;margin-top:12px;min-height:20px}
+.status.ok{color:var(--accent)} .status.warn{color:#8a3b12}
+</style>
+</head>
+<body>
+<a class="skip" href="#main" data-i="skip">Skip to main content</a>
+
+<header>
+  <div class="hrow">
+    <span class="hlabel" id="hlabel"></span>
+    <button class="langbtn" id="lang" type="button" aria-label="Switch language">עברית</button>
+  </div>
+  <div class="ticks" id="ticks" aria-hidden="true"></div>
+</header>
+
+<main id="main">
+
+<!-- 0 ENTRY -->
+<section class="station on" data-s="0" aria-labelledby="t0">
+  <div class="eyebrow" data-i="s0eye"></div>
+  <h1 id="t0" data-i="s0title"></h1>
+  <p class="lead" data-i="s0lead"></p>
+  <div class="card">
+    <div class="ct" data-i="s0groupct"></div>
+    <label for="gname" data-i="s0namelbl"></label>
+    <input type="text" id="gname" maxlength="40" autocomplete="off">
+    <p class="muted" style="margin-top:9px" data-i="s0namehint"></p>
+  </div>
+  <div class="note"><b data-i="s0noteb"></b> <span data-i="s0note"></span></div>
+</section>
+
+<!-- 1 CHOOSE -->
+<section class="station" data-s="1" aria-labelledby="t1">
+  <div class="eyebrow" data-i="s1eye"></div>
+  <h1 id="t1" data-i="s1title"></h1>
+  <p class="lead" data-i="s1lead"></p>
+
+  <h2 data-i="s1doors"></h2>
+  <div class="card">
+    <div class="ct" data-i="s1act"></div>
+    <h3 data-i="s1ah"></h3>
+    <div class="prompt" data-i="s1ap"></div>
+    <button class="copy" type="button" data-copy="s1ap"></button>
+  </div>
+  <div class="card">
+    <div class="ct" data-i="s1bct"></div>
+    <h3 data-i="s1bh"></h3>
+    <div class="prompt" data-i="s1bp"></div>
+    <button class="copy" type="button" data-copy="s1bp"></button>
+  </div>
+  <div class="card">
+    <div class="ct" data-i="s1cct"></div>
+    <h3 data-i="s1ch"></h3>
+    <div class="prompt" data-i="s1cp"></div>
+    <button class="copy" type="button" data-copy="s1cp"></button>
+  </div>
+
+  <h2 data-i="s1modes"></h2>
+  <p class="muted" data-i="s1modeslead"></p>
+  <button class="choice" type="button" data-mode="shared" aria-pressed="false">
+    <b data-i="s1m1"></b><span class="muted" data-i="s1m1d"></span></button>
+  <button class="choice" type="button" data-mode="theme" aria-pressed="false">
+    <b data-i="s1m2"></b><span class="muted" data-i="s1m2d"></span></button>
+  <button class="choice" type="button" data-mode="own" aria-pressed="false">
+    <b data-i="s1m3"></b><span class="muted" data-i="s1m3d"></span></button>
+  <div class="note"><span data-i="s1amnon"></span></div>
+</section>
+
+<!-- 2 PATH -->
+<section class="station" data-s="2" aria-labelledby="t2">
+  <div class="eyebrow" data-i="s2eye"></div>
+  <h1 id="t2" data-i="s2title"></h1>
+  <p class="lead" data-i="s2lead"></p>
+  <div class="card">
+    <div class="ct" data-i="s2pct"></div>
+    <div class="prompt" data-i="s2p"></div>
+    <button class="copy" type="button" data-copy="s2p"></button>
+  </div>
+  <h2 data-i="s2media"></h2>
+  <div class="card soft"><h3 data-i="s2m1"></h3><p class="muted" data-i="s2m1d"></p></div>
+  <div class="card soft"><h3 data-i="s2m2"></h3><p class="muted" data-i="s2m2d"></p></div>
+  <div class="card soft"><h3 data-i="s2m3"></h3><p class="muted" data-i="s2m3d"></p></div>
+  <div class="note"><b data-i="s2limitb"></b> <span data-i="s2limit"></span></div>
+</section>
+
+<!-- 3 DIALOGUE -->
+<section class="station" data-s="3" aria-labelledby="t3">
+  <div class="eyebrow" data-i="s3eye"></div>
+  <h1 id="t3" data-i="s3title"></h1>
+  <div class="note"><b data-i="s3ruleb"></b> <span data-i="s3rule"></span></div>
+  <p class="lead" data-i="s3lead"></p>
+  <div id="prompts"></div>
+</section>
+
+<!-- 4 CONNECT -->
+<section class="station" data-s="4" aria-labelledby="t4">
+  <div class="eyebrow" data-i="s4eye"></div>
+  <h1 id="t4" data-i="s4title"></h1>
+  <div class="note"><b data-i="s4stopb"></b> <span data-i="s4stop"></span></div>
+  <p class="lead" data-i="s4lead"></p>
+  <div class="card">
+    <div class="ct" data-i="s4qct"></div>
+    <ul>
+      <li data-i="s4q1"></li><li data-i="s4q2"></li>
+      <li data-i="s4q3"></li><li data-i="s4q4"></li>
+    </ul>
+  </div>
+</section>
+
+<!-- 5 SHARE -->
+<section class="station" data-s="5" aria-labelledby="t5">
+  <div class="eyebrow" data-i="s5eye"></div>
+  <h1 id="t5" data-i="s5title"></h1>
+  <p class="lead" data-i="s5lead"></p>
+  <p class="muted" data-i="s5opt"></p>
+  <label for="f_ins" data-i="s5insl"></label>
+  <textarea id="f_ins" maxlength="400"></textarea>
+  <label for="f_con" data-i="s5conl"></label>
+  <textarea id="f_con" maxlength="400"></textarea>
+  <label for="f_que" data-i="s5quel"></label>
+  <textarea id="f_que" maxlength="400"></textarea>
+  <div style="margin-top:20px">
+    <button class="btn prim" id="send" type="button" style="width:100%"></button>
+  </div>
+  <div class="status" id="sendstatus" role="status" aria-live="polite"></div>
+</section>
+
+<!-- 6 AFTER -->
+<section class="station" data-s="6" aria-labelledby="t6">
+  <div class="eyebrow" data-i="s6eye"></div>
+  <h1 id="t6" data-i="s6title"></h1>
+  <p class="lead" data-i="s6lead"></p>
+  <div class="card">
+    <div class="ct" data-i="s6contact"></div>
+    <p>Prof. Amnon Glassner<br>
+      <a href="mailto:amnonglassner55@gmail.com" style="color:var(--accent)">amnonglassner55@gmail.com</a>
+    </p>
+    <p class="muted" data-i="s6contactd"></p>
+  </div>
+  <div class="card soft">
+    <div class="ct" data-i="s6refct"></div>
+    <p class="muted">Hagiladi &amp; Glassner, 2026</p>
+  </div>
+  <p class="muted" style="margin-top:26px" data-i="s6a11y"></p>
+</section>
+
+</main>
+
+<nav class="bottom" aria-label="Station navigation">
+  <div class="nrow">
+    <button class="btn ghost" id="back" type="button">&larr;</button>
+    <button class="btn prim" id="fwd" type="button"></button>
+  </div>
+</nav>
+
+<div class="sr-only" id="live" role="status" aria-live="polite"></div>
+
+<!-- Config first, so window.CB_FIREBASE exists before the initial flush()
+     runs. If this file is missing the app still works end to end and every
+     submission simply queues. -->
+<script src="firebase-config.js"></script>
+<script>
+/* ============================================================
+   Crossing Learning Boundaries - workshop companion
+   Levinsky-Wingate, 7 October 2026.
+
+   Three deliberate constraints, all from the planning meeting:
+   1. NO AI inside this app. Amnon was explicit. Prompts are copy-paste only.
+   2. NO products. Only one insight, one connection, one question.
+   3. The whole journey must work with no network. Only the final send
+      needs one, and it queues and retries if it fails.
+   ============================================================ */
+
+const STR = {
+ en:{
+  skip:"Skip to main content", langbtn:"עברית",
+  next:"Next", back:"Back", start:"Start", finish:"Done",
+
+  s0eye:"Welcome", s0title:"A short crossing",
+  s0lead:"Over the next half hour you will start a learning journey of your own choosing, with generative AI as a partner rather than an answer machine. This page walks with you. Nothing here is graded and nothing is collected except what you choose to send at the end.",
+  s0groupct:"Your group",
+  s0namelbl:"Name your pair or triad",
+  s0namehint:"Anything you like. It appears beside whatever you send to the shared board at the end.",
+  s0noteb:"One thing to know.",
+  s0note:"The goal is to experience a short heutagogical learning, not to produce a perfect answer.",
+
+  s1eye:"Station 1", s1title:"Choose your crossing",
+  s1lead:"Find a question, issue or topic that crosses a boundary: between disciplines, cultures, regions, professions or communities. It does not have to come from your own field.",
+  s1doors:"Three ways in. Pick the one that fits where you are.",
+  s1act:"If you already have a topic", s1ah:"Sharpen it into an open question",
+  s1ap:"I am at a conference on crossing boundaries and disciplines. I work in [your field]. I want to explore [your topic].\n\nHelp me word this as an open question that genuinely crosses into another discipline, culture or profession - one that opens a space to explore, not one with a single short answer. Offer me three different wordings and tell me what each one would open up.",
+  s1bct:"If you have a thread but not a question", s1bh:"Let the dialogue find it",
+  s1bp:"I am curious about [your rough idea] but I cannot sharpen it into a question yet.\n\nAsk me three questions that would help me discover what actually interests me in it. Do not give me an answer or a topic yet - just ask.",
+  s1cct:"If you are starting from nothing", s1ch:"Ask for a spread to choose from",
+  s1cp:"I am an academic working in [your field], at a conference about crossing boundaries between disciplines, cultures and professions.\n\nSuggest eight questions or issues from outside my own field that could genuinely interest me. Each should be something I can taste in about twenty minutes - enough to get into it a little, not to exhaust it. For each one, add a sentence on why it might surprise someone from my field.",
+  s1modes:"How will you work together?",
+  s1modeslead:"Decide this now. There is no wrong answer, and you can change it.",
+  s1m1:"One shared question", s1m1d:"All of you follow the same question together.",
+  s1m2:"One theme, personal questions", s1m2d:"A shared theme, and each of you takes the part that interests you.",
+  s1m3:"Separate topics", s1m3d:"Different questions entirely. You are each other's sounding board.",
+  s1amnon:"Whatever you choose, do not give up your own curiosity for the sake of agreement.",
+
+  s2eye:"Station 2", s2title:"Map your path",
+  s2lead:"Before you start gathering, decide what you actually want from this: to understand something, to explain it, to create, to decide, or simply to satisfy a curiosity. Then decide how you will learn it.",
+  s2pct:"Ask the AI to help you plan, not to answer",
+  s2p:"My question is: [your question].\n\nI learn well when [how you learn - reading, watching, arguing, making, seeing examples].\n\nGiven that: which ways of learning might suit this topic, and why? Which kinds of sources should I start with, and which should I save for later? Do not answer the question itself yet.",
+  s2media:"What is available to you right now",
+  s2m1:"A dialogue with an AI model", s2m1d:"Your own choice of tool. Copy a prompt from here and edit it.",
+  s2m2:"Video and audio", s2m2d:"Ask the model for the exact search terms to use on YouTube, or which podcasts cover this.",
+  s2m3:"A NotebookLM notebook", s2m3d:"Ask which sources to gather, load them in, and let it build a mind map, a briefing or a short audio overview.",
+  s2limitb:"Today only:",
+  s2limit:"whatever is on your phone. You cannot go and visit, interview or experiment. That constraint is part of the exercise.",
+
+  s3eye:"Station 3", s3title:"Dialogue, not a query",
+  s3ruleb:"The one rule that matters:",
+  s3rule:"do not stop at the first answer. Push back, narrow, ask again. The interesting thing is almost never in the first reply.",
+  s3lead:"These are scaffolds, not a recipe. Take what helps, change the wording, skip freely and go back.",
+
+  s4eye:"Station 4", s4title:"Put the phone down",
+  s4stopb:"Stop searching now.",
+  s4stop:"The remaining minutes are for talking to each other, not to the model.",
+  s4lead:"Learning is a connection being made. Find the one connection that entered your own thinking - not the most impressive thing you found.",
+  s4qct:"Talk about",
+  s4q1:"What surprised you, and why was it surprising to you specifically?",
+  s4q2:"Where did the dialogue go somewhere you did not expect?",
+  s4q3:"What connects to your discipline, your teaching, or your own life?",
+  s4q4:"What question do you have now that you did not have half an hour ago?",
+
+  s5eye:"Station 5", s5title:"Send one spark",
+  s5lead:"Whatever you send appears on the shared board. Keep it short - a line is plenty.",
+  s5opt:"All three are optional. Send one, two, three, or none at all.",
+  s5insl:"One insight", s5conl:"One connection", s5quel:"One question",
+  send:"Send to the board", sending:"Sending...",
+  sent:"Sent. Thank you.", queued:"No connection right now - saved, and it will send itself when the network returns.",
+  empty:"Write something in at least one field first.",
+
+  s6eye:"Afterwards", s6title:"Where to take this",
+  s6lead:"If you want the materials, the prompt set, or to keep the conversation going, write to Amnon. He answers personally.",
+  s6contact:"Contact", s6contactd:"Kaye Academic College of Education, Be'er-Sheva.",
+  s6refct:"The triangle you saw",
+  s6a11y:"Accessibility: this page is built to WCAG 2.0 AA. If something is not usable for you, write to tomhagiladi@gmail.com and it will be fixed.",
+
+  copy:"Copy", copied:"Copied",
+  pr:[
+   ["Open","What could be interesting to learn about [your topic]? Do not summarise it for me - show me where the live questions are."],
+   ["Unexpected disciplines","Which unexpected disciplines or professions have something to say about [your topic]? Pick three that are far apart from each other and tell me what each one would notice that the others would miss."],
+   ["Macro and micro","Look at [your topic] from very far away, and then from very close up. What is visible at each scale that disappears at the other?"],
+   ["The background","In the usual telling of [your topic], what sits in the background and is never examined? Bring the background forward and tell me what it looks like from there."],
+   ["What if","What would change about [your topic] if [some basic condition] were not true? Follow the consequences honestly, even if they are inconvenient."],
+   ["Defamiliarization","Describe [your topic] to me as if I had never encountered it and as if it were strange rather than obvious. Do not use the standard vocabulary of the field."],
+   ["Surprise me","Find me something about [your topic] that would genuinely surprise a specialist - something recent, counter-intuitive, or that changes how the familiar part is understood. Not a fun fact."],
+   ["What gets neglected","What do people consistently neglect or avoid in the conversation about [your topic], and why does it get avoided?"],
+   ["Three generations on","How might [your topic] look when AI is three generations further on than today? Which part of it becomes trivial and which part becomes more important?"],
+   ["Challenge me","Here is what I now think about [your topic]: [your view]. Argue the opposite as strongly as you honestly can, and tell me which of my assumptions you had to attack to do it."]
+  ]
+ },
+ he:{
+  skip:"דלג לתוכן הראשי", langbtn:"English",
+  next:"הבא", back:"חזרה", start:"מתחילים", finish:"סיום",
+
+  s0eye:"ברוכים הבאים", s0title:"חצייה קצרה",
+  s0lead:"בחצי השעה הקרובה תצאו למסע למידה שאתם בוחרים, עם בינה מלאכותית כשותפה לחשיבה ולא כמכונת תשובות. הדף הזה הולך איתכם. אין כאן ציון, ולא נאסף שום דבר חוץ ממה שתבחרו לשלוח בסוף.",
+  s0groupct:"הקבוצה שלכם",
+  s0namelbl:"שם לזוג או לשלשה",
+  s0namehint:"מה שבא לכם. הוא יופיע ליד מה שתשלחו ללוח המשותף בסוף.",
+  s0noteb:"דבר אחד שכדאי לדעת.",
+  s0note:"המטרה היא לחוות למידה יוטגוגית קצרה, לא להגיע לתשובה מושלמת.",
+
+  s1eye:"תחנה 1", s1title:"בוחרים חצייה",
+  s1lead:"מצאו שאלה, סוגיה או נושא שחוצים גבול: בין דיסציפלינות, תרבויות, אזורים, מקצועות או קהילות. זה לא חייב להיות מתחום הדעת שלכם.",
+  s1doors:"שלוש דרכי כניסה. בחרו את זו שמתאימה לאיפה שאתם.",
+  s1act:"אם כבר יש לכם נושא", s1ah:"חדדו אותו לשאלה פתוחה",
+  s1ap:"אני בכנס על חציית גבולות ותחומי דעת. אני עוסק ב[תחום שלך]. אני רוצה לחקור את [הנושא שלך].\n\nעזור לי לנסח את זה כשאלה פתוחה שבאמת חוצה אל דיסציפלינה, תרבות או מקצוע אחרים - שאלה שפותחת מרחב לחקור, ולא כזו שיש לה תשובה אחת קצרה. הצע לי שלושה ניסוחים שונים, ולכל אחד הסבר מה הוא פותח.",
+  s1bct:"אם יש קצה חוט ואין עדיין שאלה", s1bh:"תנו לדיאלוג למצוא אותה",
+  s1bp:"מסקרן אותי [הרעיון הגולמי שלך], אבל אני עדיין לא מצליח לחדד את זה לשאלה.\n\nשאל אותי שלוש שאלות שיעזרו לי לגלות מה באמת מעניין אותי בזה. אל תיתן לי עדיין תשובה או נושא - רק תשאל.",
+  s1cct:"אם אתם מתחילים מאפס", s1ch:"בקשו מבחר לבחור ממנו",
+  s1cp:"אני איש אקדמיה שעוסק ב[תחום שלך], בכנס שעוסק בחציית גבולות בין דיסציפלינות, תרבויות ומקצועות.\n\nהצע לי שמונה שאלות או סוגיות מחוץ לתחום שלי שיכולות באמת לעניין אותי. כל אחת צריכה להיות משהו שאפשר לטעום בכעשרים דקות - להיכנס קצת לעובי הקורה, לא למצות. לכל אחת הוסף משפט על מה בה עשוי להפתיע מישהו מהתחום שלי.",
+  s1modes:"איך תעבדו יחד?",
+  s1modeslead:"תחליטו על זה עכשיו. אין תשובה נכונה, ואפשר לשנות.",
+  s1m1:"שאלה משותפת אחת", s1m1d:"כולכם הולכים יחד אחרי אותה שאלה.",
+  s1m2:"נושא משותף, שאלות אישיות", s1m2d:"נושא אחד, וכל אחד לוקח את החלק שמסקרן אותו.",
+  s1m3:"נושאים נפרדים", s1m3d:"שאלות שונות לגמרי. אתם קרש התהודה אחד של השני.",
+  s1amnon:"מה שלא תבחרו, אל תוותרו על הסקרנות האישית שלכם לטובת הסכמה.",
+
+  s2eye:"תחנה 2", s2title:"מתכננים מסלול",
+  s2lead:"לפני שמתחילים לאסוף, תחליטו מה אתם בעצם רוצים מזה: להבין משהו, להסביר, ליצור, להחליט, או פשוט לספק סקרנות. ואז תחליטו איך תלמדו את זה.",
+  s2pct:"בקשו מהבינה לעזור לתכנן, לא לענות",
+  s2p:"השאלה שלי היא: [השאלה שלך].\n\nאני לומד טוב כש[איך אתה לומד - קריאה, צפייה, ויכוח, עשייה, דוגמאות].\n\nבהינתן זה: אילו דרכי למידה עשויות להתאים לנושא הזה, ולמה? מאילו סוגי מקורות כדאי שאתחיל, ואילו כדאי לשמור להמשך? אל תענה עדיין על השאלה עצמה.",
+  s2media:"מה זמין לכם עכשיו",
+  s2m1:"דיאלוג עם מודל שפה", s2m1d:"הכלי שאתם בוחרים. העתיקו פרומפט מכאן וערכו אותו.",
+  s2m2:"וידאו ואודיו", s2m2d:"בקשו מהמודל את מילות החיפוש המדויקות ליוטיוב, או אילו פודקאסטים עוסקים בזה.",
+  s2m3:"מחברת NotebookLM", s2m3d:"בקשו אילו מקורות לאסוף, העלו אותם, ותנו לה לבנות מפת חשיבה, תדריך או סקירה קולית קצרה.",
+  s2limitb:"היום בלבד:",
+  s2limit:"מה שיש בטלפון. אי אפשר לצאת לבקר, לראיין או להתנסות. האילוץ הזה הוא חלק מהתרגיל.",
+
+  s3eye:"תחנה 3", s3title:"דיאלוג, לא שאילתה",
+  s3ruleb:"הכלל היחיד שחשוב:",
+  s3rule:"לא עוצרים בתשובה הראשונה. תתווכחו, תצמצמו, תשאלו שוב. הדבר המעניין כמעט לעולם לא נמצא בתשובה הראשונה.",
+  s3lead:"אלה פיגומים, לא מתכון. קחו מה שעוזר, שנו ניסוח, דלגו וחזרו אחורה בחופשיות.",
+
+  s4eye:"תחנה 4", s4title:"מניחים את הטלפון",
+  s4stopb:"מפסיקים לחפש עכשיו.",
+  s4stop:"הדקות שנשארו הן לדבר אחד עם השני, לא עם המודל.",
+  s4lead:"למידה היא חיבור שנוצר. חפשו את החיבור האחד שנכנס לחשיבה שלכם, לא את הדבר המרשים ביותר שמצאתם.",
+  s4qct:"דברו על",
+  s4q1:"מה הפתיע אתכם, ולמה דווקא אתכם זה הפתיע?",
+  s4q2:"איפה הדיאלוג לקח אתכם למקום שלא ציפיתם לו?",
+  s4q3:"מה מתחבר לתחום שלכם, להוראה שלכם, או לחיים שלכם?",
+  s4q4:"איזו שאלה יש לכם עכשיו שלא הייתה לפני חצי שעה?",
+
+  s5eye:"תחנה 5", s5title:"שולחים ניצוץ אחד",
+  s5lead:"מה שתשלחו יופיע על הלוח המשותף. שמרו על קוצר - שורה אחת מספיקה.",
+  s5opt:"שלושתם אופציונליים. שלחו אחד, שניים, שלושה, או כלום.",
+  s5insl:"תובנה אחת", s5conl:"חיבור אחד", s5quel:"שאלה אחת",
+  send:"שליחה ללוח", sending:"שולח...",
+  sent:"נשלח. תודה.", queued:"אין חיבור כרגע - נשמר, והוא יישלח לבד כשהרשת תחזור.",
+  empty:"כתבו משהו לפחות באחד השדות.",
+
+  s6eye:"אחר כך", s6title:"לאן לוקחים את זה",
+  s6lead:"אם בא לכם את החומרים, את מאגר הפרומפטים, או פשוט להמשיך את השיחה, כתבו לאמנון. הוא עונה אישית.",
+  s6contact:"יצירת קשר", s6contactd:"המכללה האקדמית לחינוך ע\"ש קיי, באר שבע.",
+  s6refct:"המשולש שראיתם",
+  s6a11y:"נגישות: הדף בנוי לתקן WCAG 2.0 AA. אם משהו לא שמיש עבורכם, כתבו ל-tomhagiladi@gmail.com ונתקן.",
+
+  copy:"העתקה", copied:"הועתק",
+  pr:[
+   ["פתיחה","מה יכול להיות מעניין ללמוד על [הנושא שלך]? אל תסכם לי את זה - תראה לי איפה נמצאות השאלות החיות."],
+   ["דיסציפלינות בלתי צפויות","אילו דיסציפלינות או מקצועות בלתי צפויים יש להם מה לומר על [הנושא שלך]? בחר שלושה שרחוקים זה מזה, ולכל אחד תאר מה הוא היה שם לב אליו שהאחרים היו מפספסים."],
+   ["מאקרו ומיקרו","הסתכל על [הנושא שלך] ממרחק גדול מאוד, ואז מקרוב מאוד. מה נראה בכל קנה מידה שנעלם באחר?"],
+   ["מה ברקע","בסיפור הרגיל על [הנושא שלך], מה יושב ברקע ואף פעם לא נבחן? הבא את הרקע לחזית ותאר לי איך זה נראה משם."],
+   ["מה היה קורה אילו","מה היה משתנה ב[הנושא שלך] אילו [תנאי בסיסי כלשהו] לא היה נכון? לך אחרי ההשלכות בכנות, גם אם הן לא נוחות."],
+   ["הזרת המוכר","תאר לי את [הנושא שלך] כאילו מעולם לא נתקלתי בו, וכאילו הוא מוזר ולא מובן מאליו. אל תשתמש באוצר המילים הסטנדרטי של התחום."],
+   ["תפתיע אותי","מצא לי משהו על [הנושא שלך] שבאמת יפתיע מומחה - משהו עדכני, מנוגד לאינטואיציה, או כזה שמשנה את ההבנה של החלק המוכר. לא טריוויה."],
+   ["מה מזניחים","מה נוטים להזניח או להימנע ממנו בעקביות בשיחה על [הנושא שלך], ולמה נמנעים מזה?"],
+   ["שלושה דורות קדימה","איך [הנושא שלך] עשוי להיראות כשהבינה המלאכותית תהיה שלושה דורות קדימה מהיום? איזה חלק ממנו הופך לטריוויאלי ואיזה חלק נעשה חשוב יותר?"],
+   ["תאתגר אותי","הנה מה שאני חושב עכשיו על [הנושא שלך]: [העמדה שלך]. טען את ההפך חזק ככל שאתה יכול בכנות, ותגיד לי באילו מההנחות שלי היית צריך לתקוף כדי לעשות את זה."]
+  ]
+ }
+};
+
+const TITLES = { en:["Welcome","Choose","Path","Dialogue","Connect","Share","After"],
+                 he:["פתיחה","בחירה","מסלול","דיאלוג","חיבור","שיתוף","סיום"] };
+
+const N = 7;
+let lang = 'en', s = 0, mode = null;
+
+/* localStorage can throw in private mode. Every touch is wrapped. */
+const store = {
+  get(k,d){ try{ const v=localStorage.getItem('cb26_'+k); return v===null?d:JSON.parse(v); }catch(e){ return d; } },
+  set(k,v){ try{ localStorage.setItem('cb26_'+k, JSON.stringify(v)); }catch(e){} }
+};
+
+const $ = q => document.querySelector(q);
+const $$ = q => [...document.querySelectorAll(q)];
+
+function t(k){ return STR[lang][k]; }
+
+function paint(){
+  const d = STR[lang];
+  document.documentElement.lang = lang;
+  document.documentElement.dir  = (lang === 'he') ? 'rtl' : 'ltr';
+  $$('[data-i]').forEach(el => { const v = d[el.dataset.i]; if (typeof v === 'string') el.textContent = v; });
+  $('#lang').textContent = d.langbtn;
+  $('#send').textContent = d.send;          // has no data-i; it was shipping blank
+  $('#back').setAttribute('aria-label', d.back);
+  $('#back').innerHTML = (lang === 'he') ? '&rarr;' : '&larr;';
+  $$('.copy').forEach(b => { if (!b.classList.contains('done')) b.textContent = d.copy; });
+  buildPrompts();
+  paintNav();
+}
+
+function buildPrompts(){
+  const host = $('#prompts'); host.innerHTML = '';
+  STR[lang].pr.forEach(([title, body], i) => {
+    const c = document.createElement('div'); c.className = 'card';
+    const h = document.createElement('div'); h.className = 'ct'; h.textContent = title;
+    const p = document.createElement('div'); p.className = 'prompt'; p.textContent = body;
+    const b = document.createElement('button');
+    b.className = 'copy'; b.type = 'button'; b.textContent = STR[lang].copy;
+    b.addEventListener('click', () => doCopy(b, body));
+    c.append(h, p, b); host.appendChild(c);
+  });
+}
+
+function doCopy(btn, text){
+  const done = () => {
+    btn.textContent = STR[lang].copied; btn.classList.add('done');
+    $('#live').textContent = STR[lang].copied;
+    setTimeout(() => { btn.textContent = STR[lang].copy; btn.classList.remove('done'); }, 1800);
+  };
+  if (navigator.clipboard && window.isSecureContext){
+    navigator.clipboard.writeText(text).then(done, () => fallback(text, done));
+  } else fallback(text, done);
+}
+function fallback(text, done){
+  const ta = document.createElement('textarea');
+  ta.value = text; ta.setAttribute('readonly','');
+  ta.style.cssText = 'position:fixed;top:-1000px';
+  document.body.appendChild(ta); ta.select();
+  try{ document.execCommand('copy'); done(); }catch(e){}
+  ta.remove();
+}
+
+function paintNav(){
+  const d = STR[lang];
+  $('#hlabel').innerHTML = TITLES[lang][s] + ' &middot; <b>' + (s+1) + '/' + N + '</b>';
+  $('#fwd').textContent = (s === 0) ? d.start : (s === N-1 ? d.finish : d.next);
+  $('#back').disabled = (s === 0);
+  $('#fwd').disabled  = (s === N-1);
+  const ticks = $('#ticks'); ticks.innerHTML = '';
+  for (let i = 0; i < N; i++){
+    const b = document.createElement('i');
+    if (i < s) b.className = 'done'; else if (i === s) b.className = 'now';
+    ticks.appendChild(b);
+  }
+}
+
+function go(n){
+  s = Math.max(0, Math.min(N-1, n));
+  $$('.station').forEach(el => el.classList.toggle('on', +el.dataset.s === s));
+  paintNav(); store.set('s', s);
+  window.scrollTo({ top: 0, behavior: 'instant' in window ? 'instant' : 'auto' });
+  $('#main').focus?.();
+}
+
+/* ---- sending ---------------------------------------------------------- */
+/* Firebase is imported LAZILY and only here. If the CDN never loads, or the
+   network is down, the journey above is entirely unaffected and the payload
+   is queued in localStorage. This is the failure mode that is easiest to
+   miss, because at home everything always loads. */
+async function send(){
+  const st = $('#sendstatus');
+  const payload = {
+    group: ($('#gname').value || '').trim().slice(0,40),
+    mode: mode,
+    insight: $('#f_ins').value.trim().slice(0,400),
+    connection: $('#f_con').value.trim().slice(0,400),
+    question: $('#f_que').value.trim().slice(0,400),
+    lang: lang,
+    ts: Date.now()
+  };
+  if (!payload.insight && !payload.connection && !payload.question){
+    st.className = 'status warn'; st.textContent = t('empty'); return;
+  }
+  $('#send').disabled = true;
+  st.className = 'status'; st.textContent = t('sending');
+  try{
+    await deliver(payload);
+    st.className = 'status ok'; st.textContent = t('sent');
+    setTimeout(() => go(N-1), 900);
+  }catch(e){
+    queue(payload);
+    st.className = 'status warn'; st.textContent = t('queued');
+    setTimeout(() => go(N-1), 1400);
+  }
+  $('#send').disabled = false;
+}
+
+async function deliver(payload){
+  if (!window.CB_FIREBASE) throw new Error('not configured');
+  const [{ initializeApp }, { getFirestore, collection, addDoc, serverTimestamp }] =
+    await Promise.all([
+      import('https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js'),
+      import('https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js')
+    ]);
+  const app = window.__cbApp || (window.__cbApp = initializeApp(window.CB_FIREBASE));
+  const db = getFirestore(app);
+  await addDoc(collection(db, 'cards'), { ...payload, createdAt: serverTimestamp() });
+}
+
+function queue(p){ const q = store.get('queue', []); q.push(p); store.set('queue', q); }
+async function flush(){
+  const q = store.get('queue', []); if (!q.length) return;
+  const left = [];
+  for (const p of q){ try{ await deliver(p); }catch(e){ left.push(p); } }
+  store.set('queue', left);
+}
+
+/* ---- wiring ----------------------------------------------------------- */
+$('#lang').addEventListener('click', () => {
+  lang = (lang === 'en') ? 'he' : 'en'; store.set('lang', lang); paint();
+});
+$('#fwd').addEventListener('click', () => go(s+1));
+$('#back').addEventListener('click', () => go(s-1));
+$('#send').addEventListener('click', send);
+$$('.choice').forEach(b => b.addEventListener('click', () => {
+  mode = b.dataset.mode; store.set('mode', mode);
+  $$('.choice').forEach(o => o.setAttribute('aria-pressed', String(o === b)));
+}));
+$$('[data-copy]').forEach(b => b.addEventListener('click', () => {
+  doCopy(b, STR[lang][b.dataset.copy]);
+}));
+$('#gname').addEventListener('input', e => store.set('gname', e.target.value));
+addEventListener('online', flush);
+
+/* restore */
+lang = store.get('lang', 'en');
+mode = store.get('mode', null);
+if (mode) $$('.choice').forEach(o => o.setAttribute('aria-pressed', String(o.dataset.mode === mode)));
+$('#gname').value = store.get('gname', '');
+paint();
+go(store.get('s', 0));
+flush();
+</script>
+</body>
+</html>

@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Crossing Learning Boundaries — Shared Board</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,300..900&family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500;600;700&family=IBM+Plex+Sans+Hebrew:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --paper:#F5F1E8; --field:#E3DCCC; --ink:#15171C; --ink-soft:#474C56;
+  --accent:#1E4B8F; --accent-soft:#8FA4C4;
+  --display:"Fraunces",Georgia,serif;
+  --body:"IBM Plex Sans","IBM Plex Sans Hebrew",system-ui,sans-serif;
+  --mono:"IBM Plex Mono",ui-monospace,monospace;
+  --seam:96px;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{height:100%;overflow:hidden}
+body{font-family:var(--body);color:var(--ink);
+  background:linear-gradient(to bottom,
+    var(--paper) 0, var(--paper) var(--seam),
+    var(--field) var(--seam), var(--field) 100%)}
+
+/* the seam, carried over from the deck and the app */
+.seam{position:fixed;left:0;right:0;top:var(--seam);height:2px;background:var(--ink);z-index:10}
+
+header{position:fixed;left:0;right:0;top:0;height:var(--seam);z-index:11;
+  display:flex;align-items:center;gap:26px;padding:0 40px}
+h1{font-family:var(--display);font-size:30px;font-weight:600;letter-spacing:-.01em}
+.counts{margin-inline-start:auto;display:flex;gap:26px;font-family:var(--mono);
+  font-size:15px;font-weight:500;letter-spacing:.1em;color:var(--ink-soft)}
+.counts b{color:var(--accent);font-weight:500}
+
+main{position:absolute;inset:calc(var(--seam) + 22px) 30px 0;overflow:hidden;
+  column-gap:22px;column-fill:balance}
+.card{break-inside:avoid;background:var(--paper);border:2px solid var(--ink);
+  border-radius:14px;padding:17px 19px;margin-bottom:22px;
+  animation:in .45s cubic-bezier(.2,.7,.3,1)}
+@keyframes in{from{opacity:0;transform:translateY(22px)}to{opacity:1;transform:none}}
+@media (prefers-reduced-motion:reduce){ .card{animation:none} }
+.card .kind{font-family:var(--mono);font-size:13px;font-weight:500;letter-spacing:.14em;
+  text-transform:uppercase;color:var(--accent);display:flex;align-items:center;gap:9px;
+  margin-bottom:9px}
+.card .kind .g{margin-inline-start:auto;color:var(--ink-soft);text-transform:none;
+  letter-spacing:.04em;font-size:12px;max-width:44%;overflow:hidden;
+  text-overflow:ellipsis;white-space:nowrap}
+.card p{font-size:21px;line-height:1.4}
+.card[data-k="question"]{border-color:var(--accent)}
+.card[data-k="connection"]{background:#EDEAE0}
+html[dir="rtl"] .card{direction:rtl;text-align:right}
+
+#empty{position:absolute;inset:var(--seam) 0 0;display:flex;align-items:center;
+  justify-content:center;flex-direction:column;gap:14px;color:var(--ink-soft);
+  font-family:var(--mono);letter-spacing:.12em;text-transform:uppercase;font-size:15px}
+#empty.hide{display:none}
+
+/* Manual add. The one-hour, one-chance insurance policy: if a phone cannot
+   send, someone reads it aloud and it still reaches the wall. Press M. */
+#manual{position:fixed;inset:0;background:rgba(21,23,28,.72);z-index:40;
+  display:none;align-items:center;justify-content:center;padding:30px}
+#manual.on{display:flex}
+.mbox{background:var(--paper);border-radius:18px;padding:26px 28px;width:min(620px,100%)}
+.mbox h2{font-family:var(--display);font-size:24px;margin-bottom:14px}
+.mbox label{display:block;font-family:var(--mono);font-size:12px;letter-spacing:.14em;
+  text-transform:uppercase;color:var(--accent);margin:14px 0 6px}
+.mbox input,.mbox textarea,.mbox select{width:100%;font:inherit;font-size:17px;
+  border:2px solid var(--ink);border-radius:10px;padding:11px 12px;background:#fff}
+.mbox textarea{min-height:88px}
+.mrow{display:flex;gap:11px;margin-top:20px}
+.mrow button{flex:1;font:inherit;font-size:16px;font-weight:600;min-height:48px;
+  border-radius:999px;border:2px solid var(--ink);cursor:pointer}
+.mrow .go{background:var(--ink);color:var(--paper)}
+.mrow .no{background:transparent}
+#hint{position:fixed;right:14px;bottom:10px;font-family:var(--mono);font-size:11px;
+  color:var(--ink-soft);opacity:.6;z-index:12}
+#offline{position:fixed;left:14px;bottom:10px;font-family:var(--mono);font-size:12px;
+  color:#8a3b12;z-index:12;display:none}
+#offline.on{display:block}
+:focus-visible{outline:3px solid var(--accent);outline-offset:3px}
+</style>
+</head>
+<body>
+
+<div class="seam"></div>
+<header>
+  <h1>Sparks from the room</h1>
+  <div class="counts">
+    <span>&#9679; insights <b id="c-i">0</b></span>
+    <span>&#9632; connections <b id="c-c">0</b></span>
+    <span>&#9650; questions <b id="c-q">0</b></span>
+  </div>
+</header>
+
+<main id="wall" aria-live="polite" aria-label="Shared board"></main>
+
+<div id="empty">
+  <span>waiting for the first spark</span>
+  <span style="opacity:.6;font-size:12px">press M to add one by hand</span>
+</div>
+
+<div id="manual" role="dialog" aria-modal="true" aria-labelledby="mtitle">
+  <div class="mbox">
+    <h2 id="mtitle">Add a card by hand</h2>
+    <p style="color:var(--ink-soft);font-size:15px">
+      For when a phone will not send, or someone says something out loud that belongs on the wall.
+    </p>
+    <label for="m-kind">Kind</label>
+    <select id="m-kind">
+      <option value="insight">Insight</option>
+      <option value="connection">Connection</option>
+      <option value="question">Question</option>
+    </select>
+    <label for="m-group">Group</label>
+    <input type="text" id="m-group" maxlength="40" autocomplete="off">
+    <label for="m-text">Text</label>
+    <textarea id="m-text" maxlength="400"></textarea>
+    <div class="mrow">
+      <button class="go" type="button" id="m-add">Add to the wall</button>
+      <button class="no" type="button" id="m-cancel">Cancel</button>
+    </div>
+  </div>
+</div>
+
+<div id="hint">M add &middot; F fullscreen &middot; C columns</div>
+<div id="offline">not connected &mdash; showing local cards only</div>
+
+<script src="firebase-config.js"></script>
+<script>
+(function(){
+  const wall = document.getElementById('wall');
+  const empty = document.getElementById('empty');
+  const counts = { insight:0, connection:0, question:0 };
+  const seen = new Set();
+  let cols = 4;
+
+  const GLYPH = { insight:'●', connection:'■', question:'▲' };
+  const LABEL = { insight:'Insight', connection:'Connection', question:'Question' };
+
+  function setCols(n){ cols = Math.max(2, Math.min(6, n));
+    wall.style.columnCount = cols; }
+  setCols(window.innerWidth >= 1700 ? 5 : 4);
+
+  function isHe(s){ return /[֐-׿]/.test(s || ''); }
+
+  function add(kind, text, group, key){
+    if (!text) return;
+    if (key && seen.has(key)) return;
+    if (key) seen.add(key);
+    const c = document.createElement('div');
+    c.className = 'card'; c.dataset.k = kind;
+    if (isHe(text)) { c.dir = 'rtl'; c.style.textAlign = 'right'; }
+    const k = document.createElement('div'); k.className = 'kind';
+    k.innerHTML = '<span>' + GLYPH[kind] + '</span><span>' + LABEL[kind] + '</span>';
+    if (group){ const g = document.createElement('span');
+      g.className = 'g'; g.textContent = group; k.appendChild(g); }
+    const p = document.createElement('p'); p.textContent = text;
+    c.append(k, p); wall.prepend(c);
+    counts[kind]++; paintCounts(); empty.classList.add('hide');
+  }
+  function paintCounts(){
+    document.getElementById('c-i').textContent = counts.insight;
+    document.getElementById('c-c').textContent = counts.connection;
+    document.getElementById('c-q').textContent = counts.question;
+  }
+
+  /* A single submission can carry up to three cards. They are split so the
+     wall shows one idea per card, which is what makes it readable at range. */
+  function explode(d, id){
+    if (d.insight)    add('insight',    d.insight,    d.group, id + ':i');
+    if (d.connection) add('connection', d.connection, d.group, id + ':c');
+    if (d.question)   add('question',   d.question,   d.group, id + ':q');
+  }
+
+  /* ---- live feed ------------------------------------------------------ */
+  async function connect(){
+    if (!window.CB_FIREBASE){ document.getElementById('offline').classList.add('on'); return; }
+    try{
+      const [{ initializeApp }, fs] = await Promise.all([
+        import('https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js'),
+        import('https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js')
+      ]);
+      const app = initializeApp(window.CB_FIREBASE);
+      const db = fs.getFirestore(app);
+      const q = fs.query(fs.collection(db, 'cards'), fs.orderBy('createdAt', 'asc'));
+      fs.onSnapshot(q,
+        snap => snap.docChanges().forEach(ch => {
+          if (ch.type === 'added') explode(ch.doc.data(), ch.doc.id);
+        }),
+        () => document.getElementById('offline').classList.add('on'));
+    }catch(e){ document.getElementById('offline').classList.add('on'); }
+  }
+  connect();
+
+  /* ---- manual add ----------------------------------------------------- */
+  const modal = document.getElementById('manual');
+  function openM(){ modal.classList.add('on'); document.getElementById('m-text').focus(); }
+  function closeM(){ modal.classList.remove('on'); }
+  document.getElementById('m-cancel').addEventListener('click', closeM);
+  document.getElementById('m-add').addEventListener('click', () => {
+    const kind = document.getElementById('m-kind').value;
+    const text = document.getElementById('m-text').value.trim();
+    const group = document.getElementById('m-group').value.trim();
+    if (!text) return;
+    add(kind, text, group, null);
+    document.getElementById('m-text').value = '';
+    document.getElementById('m-group').value = '';
+    closeM();
+  });
+
+  document.addEventListener('keydown', e => {
+    if (modal.classList.contains('on')){
+      if (e.key === 'Escape') closeM();
+      return;
+    }
+    if (e.key === 'm' || e.key === 'M'){ e.preventDefault(); openM(); }
+    if (e.key === 'f' || e.key === 'F'){
+      document.fullscreenElement ? document.exitFullscreen()
+                                 : document.documentElement.requestFullscreen(); }
+    if (e.key === 'c' || e.key === 'C'){ setCols(cols >= 6 ? 2 : cols + 1); }
+  });
+
+  addEventListener('resize', () => setCols(window.innerWidth >= 1700 ? 5 : 4));
+})();
+</script>
+</body>
+</html>
