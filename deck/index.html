@@ -9,15 +9,8 @@
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,300..900&family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
 <style>
 :root{
-  /* Palette from the inspiration audit. Every pair measured for contrast,
-     including a 12% ambient-flare simulation for a lit room. */
-  --paper:#F5F1E8;      /* field A, above the seam */
-  --field:#E3DCCC;      /* field B, below the seam */
-  --ink:#15171C;        /* text + the seam itself. 15.91:1 on paper */
-  --ink-soft:#474C56;   /* labels. 7.65:1 on paper, 4.72:1 washed */
-  --accent:#1E4B8F;     /* lapis: the crossing marker. 7.58:1 on paper */
-  --accent-soft:#8FA4C4;/* diagram fills only, never text */
-  --seam:274px;         /* act 1. overridden per act below */
+  --paper:#F5F1E8; --field:#E3DCCC; --ink:#15171C; --ink-soft:#474C56;
+  --accent:#1E4B8F; --accent-soft:#8FA4C4;
   --display:"Fraunces",Georgia,serif;
   --body:"IBM Plex Sans",system-ui,sans-serif;
   --mono:"IBM Plex Mono",ui-monospace,monospace;
@@ -26,104 +19,83 @@
 html,body{height:100%}
 body{background:#2a2925;overflow:hidden;font-family:var(--body);color:var(--ink)}
 #stage{display:flex;align-items:center;justify-content:center;height:100%}
-#deck{
-  position:relative;width:1280px;height:720px;flex:0 0 1280px;
-  transform-origin:center center;overflow:hidden;background:var(--paper);
-}
-.slide{
-  position:absolute;inset:0;display:none;overflow:hidden;
-  /* The two fields. One hard stop at the seam - never a gradient. */
-  background:linear-gradient(to bottom,
-    var(--paper) 0, var(--paper) var(--seam),
-    var(--field) var(--seam), var(--field) 100%);
-}
+#deck{position:relative;width:1280px;height:720px;flex:0 0 1280px;
+  transform-origin:center center;overflow:hidden;background:var(--paper)}
+.slide{position:absolute;inset:0;display:none;overflow:hidden;background:var(--paper)}
 .slide.on{display:block}
 
-/* ---- THE SIGNATURE MOVE -------------------------------------------------
-   One 2px full-bleed ink rule. Never a second rule, never a box, never a
-   card. The moment it closes into a shape it stops meaning "boundary".
-   2px not 1px: a 1px line aliases on a projector's scaler and shimmers. */
-.seam{position:absolute;left:0;right:0;top:var(--seam);height:2px;
-      background:var(--ink);z-index:3}
-/* The mono label riding the seam. This is the orientation anchor - the
-   direct fix for "it is hard to find yourself on the screen". */
-/* The orientation label. It rode the seam in the first two versions - first at
-   the left, where it hit the title's descenders, then at the right, where it hit
-   the dense card slides. Any position ON the rule can collide, because the whole
-   point of the design is that content crosses the rule. So it moved into the
-   reserved bottom strip, which nothing else ever occupies. The rule stays pure:
-   one line, edge to edge, nothing attached to it. */
-.seam-label{position:absolute;left:0;bottom:13px;width:100%;text-align:center;
-      font-family:var(--mono);font-size:12px;font-weight:500;
-      letter-spacing:.14em;text-transform:uppercase;color:var(--ink-soft);z-index:6}
-.seam-label .pos{color:var(--accent)}
+/* ============ THE BOUNDARY SYSTEM =====================================
+   Version 2. Version 1 put one horizontal rule at a fixed height per act,
+   and the content was laid out independently of it - so on ten of the
+   fourteen slides the rule landed in the middle of a sentence and read as a
+   mistake rather than as a boundary.
 
-/* Act positions. Three discrete stops, moving only between acts, so the
-   move reads as a chapter marker rather than drift. */
-.act1{--seam:274px}   /* framing        - high   */
-.act2{--seam:360px}   /* core + journey - centre */
-.act3{--seam:446px}   /* doing          - low    */
+   The rule now: every slide declares its own boundary, and every boundary
+   has a REASON. It lands on a baseline, on a diagram's own structural edge,
+   on a shelf that cards hang from, or it separates two things that are
+   genuinely separate. A boundary is never allowed to fall where it merely
+   happens to fall.
 
-/* ---- type ladder: exactly three ranks, no fourth ---------------------- */
+   Geometry varies on purpose - horizontal, vertical, diagonal, paired,
+   full-bleed or partial - because the subject is crossing boundaries, and a
+   single repeated horizontal line says there is only one kind. ==========*/
+.b{position:absolute;background:var(--ink);z-index:3}
+.bh{left:0;right:0;height:2px}                    /* full-bleed horizontal */
+.bv{top:0;bottom:0;width:2px}                     /* full-bleed vertical   */
+.bp{width:2px}                                    /* partial vertical      */
+
+/* ---- type ladder: exactly three ranks --------------------------------- */
 .eyebrow{font-family:var(--mono);font-size:14px;font-weight:500;
   letter-spacing:.16em;text-transform:uppercase;color:var(--ink-soft)}
-h1{font-family:var(--display);font-size:72px;font-weight:600;
-  font-variation-settings:"opsz" 72;line-height:1.02;letter-spacing:-.015em}
+h1{font-family:var(--display);font-size:86px;font-weight:600;
+  font-variation-settings:"opsz" 96;line-height:1.02;letter-spacing:-.018em}
 h2{font-family:var(--display);font-size:40px;font-weight:600;
   font-variation-settings:"opsz" 48;line-height:1.1}
 .statement{font-family:var(--display);font-size:52px;font-weight:600;
-  font-variation-settings:"opsz" 60;line-height:1.14;letter-spacing:-.01em}
+  font-variation-settings:"opsz" 60;line-height:1.16;letter-spacing:-.01em}
 p,li{font-size:26px;line-height:1.45;font-weight:400}
-.sm{font-size:22px;line-height:1.4}
+.sm{font-size:22px;line-height:1.42}
 .accent{color:var(--accent)}
 strong{font-weight:600}
 
-/* ---- layout ----------------------------------------------------------- */
-.pad{position:absolute;inset:0;padding:56px 64px}
-.head{position:absolute;left:64px;right:64px;top:52px;z-index:2}
+.pad{position:absolute;inset:0}
+.head{position:absolute;left:64px;right:64px;top:52px;z-index:4}
 .head h2{margin-top:10px}
-.cross{position:absolute;left:64px;right:64px;z-index:2}
-.col{position:absolute;z-index:2}
-.stack>*+*{margin-top:22px}
+.col{position:absolute;z-index:4}
 
-/* Items that enter from below and cross the seam upward. */
 .f{opacity:0;transform:translateY(16px);
    transition:opacity .34s ease,transform .34s ease}
 .f.vis{opacity:1;transform:none}
-@media (prefers-reduced-motion:reduce){
-  .f{transition:none;transform:none}
-}
+@media (prefers-reduced-motion:reduce){ .f{transition:none;transform:none} }
 
-.rule-item{display:flex;gap:18px;align-items:flex-start}
-.rule-item .k{font-family:var(--mono);font-size:15px;font-weight:500;
-  color:var(--accent);padding-top:9px;min-width:28px;letter-spacing:.08em}
+/* A numbered marker that sits centred ON a vertical boundary. */
+.pin{position:absolute;width:56px;text-align:center;font-family:var(--mono);
+  font-size:15px;font-weight:500;letter-spacing:.06em;color:var(--accent);
+  background:var(--paper);padding:6px 0;z-index:5}
+.pin.onfield{background:var(--field)}
 
 .card{padding-top:18px;border-top:2px solid var(--ink)}
-.card .ct{font-family:var(--mono);font-size:14px;font-weight:500;
+.card.noborder{border-top:0;padding-top:22px}
+/* Standalone, not `.card .ct` - the timeline on slide 8 uses it outside a card
+   and silently rendered as plain body text until this was unscoped. */
+.ct{font-family:var(--mono);font-size:14px;font-weight:500;
   letter-spacing:.14em;text-transform:uppercase;color:var(--accent);
   margin-bottom:10px}
 
-/* The illustrations ship with their paper ground keyed to transparency by
-   tools/dropbg.py, so they straddle the seam with no box around them.
-   mix-blend-mode was tried first and silently did nothing - the wrapper's
-   z-index isolates the element from the slide backdrop. */
 img.ill{display:block;width:100%;height:100%;object-fit:contain}
 
-/* ---- chrome ----------------------------------------------------------- */
 #bar{position:absolute;left:0;bottom:0;height:3px;background:var(--accent);
-  width:0;z-index:6;transition:width .3s ease}
-#num{position:absolute;right:18px;bottom:14px;font-family:var(--mono);
-  font-size:12px;color:var(--ink-soft);z-index:6;
-  direction:ltr;unicode-bidi:isolate}
-#help{position:absolute;left:18px;bottom:14px;font-family:var(--mono);
-  font-size:11px;color:var(--ink-soft);z-index:6;opacity:.75}
+  width:0;z-index:8;transition:width .3s ease}
+#num{position:absolute;right:18px;bottom:13px;font-family:var(--mono);
+  font-size:12px;color:var(--ink-soft);z-index:8;direction:ltr;unicode-bidi:isolate}
+.seam-label{position:absolute;left:0;bottom:13px;width:100%;text-align:center;
+  font-family:var(--mono);font-size:12px;font-weight:500;letter-spacing:.14em;
+  text-transform:uppercase;color:var(--ink-soft);z-index:8}
+#help{position:absolute;left:18px;bottom:13px;font-family:var(--mono);
+  font-size:11px;color:var(--ink-soft);z-index:8;opacity:.75}
 :focus-visible{outline:3px solid var(--accent);outline-offset:3px}
 
-/* ---- static mode: index.html?static=1 ---------------------------------
-   Every slide stacked, every fragment revealed, no chrome. This is what
-   Chrome headless prints to the PDF that goes to the conference, and it is
-   also how the deck gets screenshotted reliably. One source of truth - the
-   PDF cannot drift from the deck because it IS the deck. */
+/* ---- static mode: ?static=1 (all slides, for the PDF) or ?slide=N ------ */
 body.static{background:var(--paper);overflow:visible}
 body.static #stage{display:block;height:auto}
 body.static #deck{width:1280px;height:auto;transform:none!important;overflow:visible}
@@ -132,21 +104,22 @@ body.static .slide{position:relative;display:block;width:1280px;height:720px;
 body.static .f{opacity:1!important;transform:none!important}
 body.static #bar,body.static #num,body.static #help{display:none}
 @page{size:1280px 720px;margin:0}
-@media print{ body.static .slide{break-after:page} }
 </style>
 </head>
 <body>
 <div id="stage"><div id="deck">
 
-<!-- 1 - TITLE ---------------------------------------------------------- -->
-<section class="slide act1" aria-label="Title">
-  <div class="seam"></div>
-  <div class="seam-label">Crossing Boundaries &middot; <span class="pos">01</span></div>
+<!-- 1 - TITLE ----------------------------------------------------------
+     Horizontal, low. The title's last line puts its baseline on the rule so
+     the descenders break through it. The boundary is stated before a word is
+     spoken. This is the one Tom singled out as working, and it is unchanged. -->
+<section class="slide" aria-label="Title"
+  style="background:linear-gradient(to bottom,var(--paper) 0 274px,var(--field) 274px 100%)">
+  <div class="b bh" style="top:274px"></div>
+  <div class="seam-label">Crossing Boundaries &middot; 01</div>
   <div class="pad">
     <div class="eyebrow" style="position:absolute;left:64px;top:56px">Experiential Workshop</div>
-    <!-- The title's last line sits ON the rule, so its descenders break through
-         it. The boundary is stated before a word is spoken. -->
-    <h1 style="position:absolute;left:64px;right:64px;top:112px;font-size:86px">
+    <h1 style="position:absolute;left:64px;right:64px;top:112px">
       Crossing<br>Learning Boundaries
     </h1>
     <p class="sm" style="position:absolute;left:68px;top:322px;color:var(--ink-soft)">
@@ -162,7 +135,6 @@ body.static #bar,body.static #num,body.static #help{display:none}
         7 October 2026
       </p>
     </div>
-    <!-- The right column carries the abstract so the lower field is not a hole. -->
     <div style="position:absolute;right:64px;top:400px;width:470px">
       <p style="font-size:24px;line-height:1.5">
         A short authentic experience in initiating and deciding what and how to
@@ -172,18 +144,22 @@ body.static #bar,body.static #num,body.static #help{display:none}
   </div>
 </section>
 
-<!-- 2 - THE CLAIM ------------------------------------------------------- -->
-<section class="slide act1" aria-label="Boundaries are not only between disciplines">
-  <div class="seam"></div>
-  <div class="seam-label">Framing &middot; <span class="pos">02</span></div>
+<!-- 2 - THE CLAIM -------------------------------------------------------
+     VERTICAL. The slide's own boundary runs one way; the boundary inside the
+     illustration runs the other. Two boundaries meeting at right angles, on
+     the slide that says boundaries are not only of one kind. -->
+<section class="slide" aria-label="Boundaries are not only between disciplines"
+  style="background:linear-gradient(to right,var(--paper) 0 620px,var(--field) 620px 100%)">
+  <div class="b bv" style="left:620px"></div>
+  <div class="seam-label">Framing &middot; 02</div>
   <div class="pad">
     <div class="eyebrow" style="position:absolute;left:64px;top:56px">Framing</div>
-    <div class="col" style="left:64px;right:600px;top:150px">
+    <div class="col" style="left:64px;width:520px;top:196px">
       <p class="statement">
         Boundaries are<br>not only between<br><span class="accent">disciplines.</span>
       </p>
     </div>
-    <div class="col" style="right:64px;top:110px;width:480px;height:470px">
+    <div class="col" style="left:556px;top:108px;width:668px;height:504px;z-index:2">
       <img class="ill" src="assets/gen/fields.png"
            alt="Two territories of different character meet along a single line, with one
                 figure standing on the line itself, one foot in each.">
@@ -191,46 +167,55 @@ body.static #bar,body.static #num,body.static #help{display:none}
   </div>
 </section>
 
-<!-- 3 - WHICH BOUNDARIES ------------------------------------------------ -->
-<section class="slide act1" aria-label="Which boundaries">
-  <div class="seam"></div>
-  <div class="seam-label">Framing &middot; <span class="pos">03</span></div>
+<!-- 3 - WHICH BOUNDARIES -----------------------------------------------
+     PARTIAL VERTICAL, starting below the heading so the heading is never cut.
+     Each numbered marker sits centred ON the rule, so every one of the three
+     items crosses it. The rhythm is the argument. -->
+<section class="slide" aria-label="Which boundaries"
+  style="background:linear-gradient(to right,var(--field) 0 196px,var(--paper) 196px 100%)">
+  <div class="b bp" style="left:196px;top:212px;bottom:0"></div>
+  <div class="seam-label">Framing &middot; 03</div>
   <div class="pad">
     <div class="head">
       <div class="eyebrow">Framing</div>
       <h2>What boundaries are we crossing?</h2>
     </div>
-    <!-- Items accumulate downward. No fragment ever appears above one already
-         revealed - that forces a re-scan and is what makes a deck feel chaotic. -->
-    <div class="cross stack" style="top:232px">
-      <div class="f rule-item">
-        <span class="k">01</span>
-        <p><strong>Cultures, regions, professions,</strong> and communities.</p>
-      </div>
-      <div class="f rule-item">
-        <span class="k">02</span>
-        <p><strong>Ways of learning:</strong> observing, questioning, experiencing,
-           dialoguing, reflecting.</p>
-      </div>
-      <div class="f rule-item">
-        <span class="k">03</span>
-        <p><strong>Modes of expression:</strong> text, image, map, story, podcast, video.</p>
-      </div>
+    <div class="f">
+      <div class="pin onfield" style="left:169px;top:272px">01</div>
+      <p class="col" style="left:268px;right:72px;top:272px">
+        <strong>Cultures, regions, professions,</strong> and communities.</p>
+    </div>
+    <div class="f">
+      <div class="pin onfield" style="left:169px;top:400px">02</div>
+      <p class="col" style="left:268px;right:72px;top:400px">
+        <strong>Ways of learning:</strong> observing, questioning, experiencing,
+        dialoguing, reflecting.</p>
+    </div>
+    <div class="f">
+      <div class="pin onfield" style="left:169px;top:556px">03</div>
+      <p class="col" style="left:268px;right:72px;top:556px">
+        <strong>Modes of expression:</strong> text, image, map, story, podcast, video.</p>
     </div>
   </div>
 </section>
 
-<!-- 4 - THE INVITATION -------------------------------------------------- -->
-<section class="slide act1" aria-label="The invitation">
-  <div class="seam"></div>
-  <div class="seam-label">Framing &middot; <span class="pos">04</span></div>
+<!-- 4 - THE INVITATION --------------------------------------------------
+     DIAGONAL, parallel to the route inside the illustration, and passing
+     through the slide centre so the gradient and the rule coincide exactly.
+     It strikes through the words "movement across", which is the one place in
+     the deck where a boundary cutting a phrase is the point. -->
+<section class="slide" aria-label="The invitation"
+  style="background:linear-gradient(158deg,var(--paper) 0 50%,var(--field) 50% 100%)">
+  <div class="b" style="left:-20%;width:140%;height:2px;top:359px;
+       transform-origin:50% 50%;transform:rotate(-22deg)"></div>
+  <div class="seam-label">Framing &middot; 04</div>
   <div class="pad">
-    <div class="col" style="right:64px;top:96px;width:470px;height:500px">
+    <div class="col" style="right:56px;top:96px;width:500px;height:520px;z-index:2">
       <img class="ill" src="assets/gen/threshold.png"
-           alt="A single continuous path passes through a freestanding doorway and carries
-                on unbroken, rather than stopping at it.">
+           alt="A single continuous route climbs diagonally, passes through a freestanding
+                doorway and carries on unbroken, with three figures at three stages of it.">
     </div>
-    <div class="col" style="left:64px;right:580px;top:180px">
+    <div class="col" style="left:64px;width:640px;top:192px">
       <p class="statement">
         The workshop invites<br><span class="accent">movement across</span><br>
         content, method,<br>perspective, and media.
@@ -239,24 +224,28 @@ body.static #bar,body.static #num,body.static #help{display:none}
   </div>
 </section>
 
-<!-- 5 - THE SHIFT ------------------------------------------------------- -->
-<section class="slide act2" aria-label="Heutagogy, self-determined learning">
-  <div class="seam"></div>
-  <div class="seam-label">Core Idea &middot; <span class="pos">05</span></div>
+<!-- 5 - THE SHIFT -------------------------------------------------------
+     VERTICAL at 700. In v1 the horizontal rule sliced through the words
+     "They become designers". The text now sits wholly on paper and the
+     illustration is what crosses. -->
+<section class="slide" aria-label="Heutagogy, self-determined learning"
+  style="background:linear-gradient(to right,var(--paper) 0 700px,var(--field) 700px 100%)">
+  <div class="b bv" style="left:700px"></div>
+  <div class="seam-label">Core Idea &middot; 05</div>
   <div class="pad">
-    <div class="head">
+    <div class="head" style="right:auto;width:700px">
       <div class="eyebrow">Core Idea</div>
       <h2>Heutagogy: self&#8209;determined learning</h2>
     </div>
-    <div class="col" style="left:64px;right:580px;top:238px">
+    <div class="col" style="left:64px;width:600px;top:250px">
       <p class="f statement" style="font-size:44px">
         Participants are not only<br>receivers of content.
       </p>
-      <p class="f statement" style="font-size:44px;margin-top:26px">
+      <p class="f statement" style="font-size:44px;margin-top:34px">
         They become <span class="accent">designers</span><br>of a short learning journey.
       </p>
     </div>
-    <div class="col" style="right:64px;top:170px;width:470px;height:430px">
+    <div class="col" style="left:636px;top:196px;width:596px;height:400px;z-index:2">
       <img class="ill" src="assets/gen/designer.png"
            alt="On the left a figure follows a path already drawn for them; on the right a
                 figure crouches and draws their own path in a different direction.">
@@ -264,29 +253,28 @@ body.static #bar,body.static #num,body.static #help{display:none}
   </div>
 </section>
 
-<!-- 6 - THE TRIANGLE ---------------------------------------------------- -->
-<section class="slide act2" aria-label="The learner, GenAI and learning companion triangle">
-  <div class="seam"></div>
-  <div class="seam-label">Core Idea &middot; <span class="pos">06</span></div>
+<!-- 6 - THE TRIANGLE ----------------------------------------------------
+     HORIZONTAL, and placed to the pixel on the triangle's own base, which is
+     then NOT drawn by the SVG. The boundary IS the base. In v1 the rule cut
+     through the words "Emerging understanding" at an arbitrary height, which
+     is the collision Tom pointed at. -->
+<section class="slide" aria-label="The learner, GenAI and learning companion triangle"
+  style="background:linear-gradient(to bottom,var(--paper) 0 456px,var(--field) 456px 100%)">
+  <div class="b bh" style="top:456px"></div>
+  <div class="seam-label">Core Idea &middot; 06</div>
   <div class="pad">
     <div class="head">
       <div class="eyebrow">Core Idea</div>
       <h2>Three partners, one emerging understanding</h2>
     </div>
-    <!-- Built as live SVG, not an image, so it can be revealed vertex by vertex.
-         The seam is the triangle's own baseline - the diagram is built ON the
-         rule, never laid over it. -->
-    <!-- Coordinates keep the apex ABOVE the seam and the base BELOW it: the
-         seam lands at viewBox y=152, the apex at 68 and the base at 248. The
-         diagram is built ON the rule, so the rule never doubles up. -->
-    <svg viewBox="0 0 1152 400" style="position:absolute;left:64px;right:64px;top:208px;
-         width:1152px;height:400px;z-index:2" role="img"
+    <svg viewBox="0 0 1152 400" style="position:absolute;left:64px;top:208px;
+         width:1152px;height:400px;z-index:4" role="img"
          aria-label="A triangle whose vertices are Learners, GenAI and Learning companion,
-                     with Emerging understanding at the centre.">
+                     with Emerging understanding at the centre. Its base rests on the
+                     slide's boundary line.">
       <g class="f">
         <line x1="576" y1="68" x2="286" y2="248" stroke="#15171C" stroke-width="2"/>
         <line x1="576" y1="68" x2="866" y2="248" stroke="#15171C" stroke-width="2"/>
-        <line x1="286" y1="248" x2="866" y2="248" stroke="#15171C" stroke-width="2"/>
         <circle cx="576" cy="68" r="7" fill="#1E4B8F"/>
         <circle cx="286" cy="248" r="7" fill="#1E4B8F"/>
         <circle cx="866" cy="248" r="7" fill="#1E4B8F"/>
@@ -294,125 +282,158 @@ body.static #bar,body.static #num,body.static #help{display:none}
       <g class="f" font-family="IBM Plex Sans" fill="#15171C">
         <text x="576" y="16" font-size="15" fill="#474C56" text-anchor="middle"
               font-family="IBM Plex Mono" letter-spacing="1.6">GENERATE THE LEARNING</text>
-        <text x="576" y="48" font-size="27" font-weight="600" text-anchor="middle">Learners</text>
-        <text x="286" y="292" font-size="27" font-weight="600" text-anchor="middle">GenAI</text>
+        <text x="576" y="48" font-size="28" font-weight="600" text-anchor="middle">Learners</text>
+        <text x="286" y="292" font-size="28" font-weight="600" text-anchor="middle">GenAI</text>
         <text x="286" y="320" font-size="15" fill="#474C56" text-anchor="middle"
               font-family="IBM Plex Mono" letter-spacing="1.6">A DIALOGIC PARTNER</text>
-        <text x="866" y="292" font-size="27" font-weight="600" text-anchor="middle">Learning companion</text>
+        <text x="866" y="292" font-size="28" font-weight="600" text-anchor="middle">Learning companion</text>
         <text x="866" y="320" font-size="15" fill="#474C56" text-anchor="middle"
               font-family="IBM Plex Mono" letter-spacing="1.6">REVEALS CURIOSITY</text>
       </g>
       <g class="f" font-family="IBM Plex Mono" font-size="15" fill="#1E4B8F" letter-spacing="1.4">
-        <text x="420" y="150" text-anchor="middle" transform="rotate(-31.8 420 150)">DIALOGUE</text>
-        <text x="732" y="150" text-anchor="middle" transform="rotate(31.8 732 150)">CHALLENGE</text>
-        <text x="576" y="232" text-anchor="middle">REFLECTION</text>
+        <text x="416" y="148" text-anchor="middle" transform="rotate(-31.8 416 148)">DIALOGUE</text>
+        <text x="736" y="148" text-anchor="middle" transform="rotate(31.8 736 148)">CHALLENGE</text>
+        <text x="576" y="224" text-anchor="middle">REFLECTION</text>
       </g>
       <g class="f">
-        <text x="576" y="176" font-size="25" font-weight="600" text-anchor="middle"
+        <text x="576" y="166" font-size="26" font-weight="600" text-anchor="middle"
               font-family="Fraunces" fill="#15171C">Emerging</text>
-        <text x="576" y="206" font-size="25" font-weight="600" text-anchor="middle"
+        <text x="576" y="196" font-size="26" font-weight="600" text-anchor="middle"
               font-family="Fraunces" fill="#15171C">understanding</text>
       </g>
     </svg>
-    <p class="eyebrow" style="position:absolute;right:64px;bottom:44px">
+    <p class="eyebrow" style="position:absolute;right:64px;bottom:52px">
       Hagiladi &amp; Glassner, 2026
     </p>
   </div>
 </section>
 
-<!-- 7 - WHAT EACH PARTNER DOES ------------------------------------------ -->
-<section class="slide act2" aria-label="What each partner does">
-  <div class="seam"></div>
-  <div class="seam-label">Core Idea &middot; <span class="pos">07</span></div>
+<!-- 7 - WHAT EACH PARTNER DOES -----------------------------------------
+     Same partial vertical as slide 3, because it is the same kind of slide:
+     three parallel items. Repeating the geometry is what makes the other
+     variations legible as choices. -->
+<section class="slide" aria-label="What each partner does"
+  style="background:linear-gradient(to right,var(--field) 0 196px,var(--paper) 196px 100%)">
+  <div class="b bp" style="left:196px;top:212px;bottom:0"></div>
+  <div class="seam-label">Core Idea &middot; 07</div>
   <div class="pad">
     <div class="head">
       <div class="eyebrow">Core Idea</div>
       <h2>What each partner does</h2>
     </div>
-    <div class="cross stack" style="top:226px">
-      <div class="f rule-item">
-        <span class="k">&#9679;</span>
-        <p><strong>Learners</strong> decide what to learn, how, from what,
-           and how to represent.</p>
-      </div>
-      <div class="f rule-item">
-        <span class="k">&#9679;</span>
-        <p><strong>GenAI</strong> expands questions, perspectives, connections,
-           synthesis, analysis, representation and evaluation of knowledge.</p>
-      </div>
-      <div class="f rule-item">
-        <span class="k">&#9679;</span>
-        <p><strong>The learning companion</strong> reveals curiosity and aids
-           thinking and reflection.</p>
-      </div>
+    <div class="f">
+      <div class="pin onfield" style="left:169px;top:268px">&#9679;</div>
+      <p class="col" style="left:268px;right:72px;top:268px">
+        <strong>Learners</strong> decide what to learn, how, from what,
+        and how to represent.</p>
+    </div>
+    <div class="f">
+      <div class="pin onfield" style="left:169px;top:392px">&#9632;</div>
+      <p class="col" style="left:268px;right:72px;top:392px">
+        <strong>GenAI</strong> expands questions, perspectives, connections,
+        synthesis, analysis, representation and evaluation of knowledge.</p>
+    </div>
+    <div class="f">
+      <div class="pin onfield" style="left:169px;top:556px">&#9650;</div>
+      <p class="col" style="left:268px;right:72px;top:556px">
+        <strong>The learning companion</strong> reveals curiosity and aids
+        thinking and reflection.</p>
     </div>
   </div>
 </section>
 
-<!-- 8 - THE FOUR MOVES -------------------------------------------------- -->
-<section class="slide act2" aria-label="The workshop journey, four moves">
-  <div class="seam"></div>
-  <div class="seam-label">The Journey &middot; <span class="pos">08</span></div>
+<!-- 8 - THE FOUR MOVES --------------------------------------------------
+     HORIZONTAL as a shelf. The four cards hang from the boundary rather than
+     carrying four separate top borders, so the rule and the cards are one
+     object. In v1 the rule floated below the card text for no reason. -->
+<section class="slide" aria-label="The workshop journey, four moves"
+  style="background:linear-gradient(to bottom,var(--paper) 0 404px,var(--field) 404px 100%)">
+  <div class="b bh" style="top:404px"></div>
+  <div class="seam-label">The Journey &middot; 08</div>
   <div class="pad">
     <div class="head">
       <div class="eyebrow">From idea to shared curiosity</div>
       <h2>The workshop journey</h2>
     </div>
-    <div class="cross" style="top:222px;display:grid;grid-template-columns:repeat(4,1fr);gap:26px">
-      <div class="f card">
-        <div class="ct">01 &middot; Initiate</div>
+    <!-- The journey is a sequence, so the boundary runs ALONG it as a spine
+         and the four moves alternate above and below. A static shelf left the
+         lower third of the slide empty; a timeline uses the whole height and
+         says "sequence" without a single arrow. -->
+    <div class="f">
+      <div class="pin" style="left:180px;top:390px">01</div>
+      <div class="col" style="left:88px;width:266px;bottom:352px;text-align:right">
+        <div class="ct">Initiate</div>
         <p class="sm">A boundary&#8209;crossing question, topic or issue.</p>
       </div>
-      <div class="f card">
-        <div class="ct">02 &middot; Explore</div>
+    </div>
+    <div class="f">
+      <div class="pin onfield" style="left:468px;top:390px">02</div>
+      <div class="col" style="left:376px;width:266px;top:452px">
+        <div class="ct">Explore</div>
         <p class="sm">Resources, and manage a dialogue with GenAI.</p>
       </div>
-      <div class="f card">
-        <div class="ct">03 &middot; Reflect</div>
+    </div>
+    <div class="f">
+      <div class="pin" style="left:756px;top:390px">03</div>
+      <div class="col" style="left:664px;width:266px;bottom:352px;text-align:right">
+        <div class="ct">Reflect</div>
         <p class="sm">Connect disciplines, cultures and perspectives.</p>
       </div>
-      <div class="f card">
-        <div class="ct">04 &middot; Share</div>
+    </div>
+    <div class="f">
+      <div class="pin onfield" style="left:1044px;top:390px">04</div>
+      <div class="col" style="left:952px;width:266px;top:452px">
+        <div class="ct">Share</div>
         <p class="sm">Insights, and a curiosity spark.</p>
       </div>
     </div>
+    <p class="col eyebrow" style="left:64px;bottom:58px;right:64px;line-height:1.7">
+      Time principle &mdash; keep the inquiry small enough to complete,
+      but rich enough to cross a boundary.
+    </p>
   </div>
 </section>
 
-<!-- 9 - THE TIME PRINCIPLE ---------------------------------------------- -->
-<section class="slide act2" aria-label="The time principle">
-  <div class="seam"></div>
-  <div class="seam-label">The Journey &middot; <span class="pos">09</span></div>
+<!-- 9 - THE TIME PRINCIPLE ---------------------------------------------
+     VERTICAL at 640. In v1 a horizontal rule struck through "but rich
+     enough", which read as an error. The statement is now whole, and the
+     vessel is what crosses. -->
+<section class="slide" aria-label="The time principle"
+  style="background:linear-gradient(to right,var(--paper) 0 640px,var(--field) 640px 100%)">
+  <div class="b bv" style="left:640px"></div>
+  <div class="seam-label">The Journey &middot; 09</div>
   <div class="pad">
-    <div class="col" style="right:64px;top:112px;width:440px;height:480px">
+    <div class="col" style="left:64px;width:556px;top:224px">
+      <p class="f statement" style="font-size:45px">Keep the inquiry<br><span class="accent">small enough</span><br>to complete,</p>
+      <p class="f statement" style="font-size:45px;margin-top:34px">but <span class="accent">rich enough</span><br>to cross a boundary.</p>
+    </div>
+    <div class="col" style="left:560px;top:96px;width:672px;height:528px;z-index:2">
       <img class="ill" src="assets/gen/vessel.png"
            alt="A small shallow vessel from which a large, intricate branching structure
                 rises, far richer than the vessel that holds it.">
     </div>
-    <div class="col" style="left:64px;right:560px;top:198px">
-      <p class="f statement">Keep the inquiry<br><span class="accent">small enough</span> to complete,</p>
-      <p class="f statement" style="margin-top:22px">but <span class="accent">rich enough</span><br>to cross a boundary.</p>
-    </div>
   </div>
 </section>
 
-<!-- 10 - HOW WE WORK ---------------------------------------------------- -->
-<section class="slide act3" aria-label="Instructions, how we work">
-  <div class="seam"></div>
-  <div class="seam-label">Instructions &middot; <span class="pos">10</span></div>
+<!-- 10 - HOW WE WORK ----------------------------------------------------
+     VERTICAL at 690. In v1 the horizontal rule cut the last line in half. -->
+<section class="slide" aria-label="Instructions, how we work"
+  style="background:linear-gradient(to right,var(--paper) 0 690px,var(--field) 690px 100%)">
+  <div class="b bv" style="left:690px"></div>
+  <div class="seam-label">Instructions &middot; 10</div>
   <div class="pad">
-    <div class="head">
+    <div class="head" style="right:auto;width:700px">
       <div class="eyebrow">Small&#8209;group inquiry</div>
       <h2>Instructions for participants</h2>
     </div>
-    <div class="col" style="left:64px;right:560px;top:214px">
+    <div class="col" style="left:64px;width:596px;top:236px">
       <p class="f statement" style="font-size:44px">Work in <span class="accent">pairs or triads.</span></p>
-      <p class="f" style="margin-top:26px">Your goal is to experience a short heutagogical
+      <p class="f" style="margin-top:34px">Your goal is to experience a short heutagogical
         learning, <strong>not to produce a perfect answer.</strong></p>
-      <p class="f" style="margin-top:20px">Take one shared question, or individual subtopics
+      <p class="f" style="margin-top:26px">Take one shared question, or individual subtopics
         connected to one theme.</p>
     </div>
-    <div class="col" style="right:64px;top:184px;width:450px;height:420px">
+    <div class="col" style="left:626px;top:212px;width:606px;height:400px;z-index:2">
       <img class="ill" src="assets/gen/table.png"
            alt="Three figures gathered closely around one shared surface, each leaning toward
                 a single object between them.">
@@ -420,17 +441,20 @@ body.static #bar,body.static #num,body.static #help{display:none}
   </div>
 </section>
 
-<!-- 11 - THE FOUR STEPS ------------------------------------------------- -->
-<section class="slide act3" aria-label="The four steps">
-  <div class="seam"></div>
-  <div class="seam-label">Instructions &middot; <span class="pos">11</span></div>
+<!-- 11 - THE FOUR STEPS -------------------------------------------------
+     VERTICAL down the middle. Two columns of two, full height, so the lower
+     third is no longer dead space. -->
+<section class="slide" aria-label="The four steps"
+  style="background:linear-gradient(to right,var(--paper) 0 640px,var(--field) 640px 100%)">
+  <div class="b bv" style="left:640px"></div>
+  <div class="seam-label">Instructions &middot; 11</div>
   <div class="pad">
     <div class="head">
       <div class="eyebrow">Small&#8209;group inquiry</div>
       <h2>Four steps</h2>
     </div>
-    <div class="cross" style="top:220px;display:grid;grid-template-columns:1fr 1fr;
-         gap:74px 46px">
+    <div class="col" style="left:64px;right:64px;top:216px;
+         display:grid;grid-template-columns:1fr 1fr;gap:86px 92px">
       <div class="f card">
         <div class="ct">01 &middot; Choose a focus</div>
         <p class="sm">Create and word a question, issue or broad topic that crosses
@@ -455,16 +479,22 @@ body.static #bar,body.static #num,body.static #help{display:none}
   </div>
 </section>
 
-<!-- 12 - THE SCAFFOLDS -------------------------------------------------- -->
-<section class="slide act3" aria-label="Prompt scaffolds">
-  <div class="seam"></div>
-  <div class="seam-label">Scaffolds &middot; <span class="pos">12</span></div>
+<!-- 12 - THE SCAFFOLDS --------------------------------------------------
+     TWO PARALLEL VERTICALS, partial: they start below the heading so they
+     never cut it, and run to the foot. Three columns, two boundaries. -->
+<section class="slide" aria-label="Prompt scaffolds"
+  style="background:linear-gradient(to right,var(--paper) 0 448px,var(--field) 448px 832px,
+         var(--paper) 832px 100%)">
+  <div class="b bp" style="left:448px;top:196px;bottom:0"></div>
+  <div class="b bp" style="left:832px;top:196px;bottom:0"></div>
+  <div class="seam-label">Scaffolds &middot; 12</div>
   <div class="pad">
     <div class="head">
       <div class="eyebrow">Use only what helps</div>
       <h2>Prompt scaffolds</h2>
     </div>
-    <div class="cross" style="top:212px;display:grid;grid-template-columns:repeat(3,1fr);gap:34px">
+    <div class="col" style="left:64px;right:64px;top:250px;
+         display:grid;grid-template-columns:repeat(3,1fr);gap:66px">
       <div class="f card">
         <div class="ct">Open</div>
         <p class="sm">What could be interesting to learn about this topic?</p>
@@ -481,55 +511,75 @@ body.static #bar,body.static #num,body.static #help{display:none}
           should be questioned?</p>
       </div>
     </div>
-    <p class="eyebrow" style="position:absolute;left:64px;bottom:44px">
-      Scaffolds, not requirements
-    </p>
+    <p class="col eyebrow" style="left:64px;bottom:58px">Scaffolds, not requirements</p>
   </div>
 </section>
 
-<!-- 13 - THE SHARE ------------------------------------------------------ -->
-<section class="slide act3" aria-label="Share in two minutes">
-  <div class="seam"></div>
-  <div class="seam-label">The Share &middot; <span class="pos">13</span></div>
+<!-- 13 - THE SHARE ------------------------------------------------------
+     HORIZONTAL, with the three glyphs sitting centred ON it. Those same
+     three marks appear in the app and on the projected board, so the symbol
+     set reads as one object across all three surfaces. -->
+<section class="slide" aria-label="Share in two minutes"
+  style="background:linear-gradient(to bottom,var(--paper) 0 352px,var(--field) 352px 100%)">
+  <div class="b bh" style="top:352px"></div>
+  <div class="seam-label">The Share &middot; 13</div>
   <div class="pad">
-    <div class="col" style="left:64px;right:64px;top:132px">
+    <div class="col" style="left:64px;right:64px;top:150px">
       <p class="f statement">Share in <span class="accent">2 minutes</span></p>
     </div>
-    <!-- The same three shapes appear in the app and on the board, so they read
-         as one object in all three places. -->
-    <div class="cross" style="top:300px;display:grid;grid-template-columns:repeat(3,1fr);gap:40px">
-      <div class="f card">
-        <div class="ct">&#9679;&nbsp; One insight</div>
-        <p class="sm">From what you learned, or from the process itself.</p>
+    <div class="col" style="left:64px;right:64px;top:400px;
+         display:grid;grid-template-columns:repeat(3,1fr);gap:64px">
+      <div class="f">
+        <div class="ct" style="font-family:var(--mono);font-size:14px;font-weight:500;
+             letter-spacing:.14em;text-transform:uppercase;color:var(--accent);
+             margin-bottom:12px">One insight</div>
+        <p>From what you learned, or from the process itself.</p>
       </div>
-      <div class="f card">
-        <div class="ct">&#9632;&nbsp; One connection</div>
-        <p class="sm">To your discipline, your work, or your own life.</p>
+      <div class="f">
+        <div class="ct" style="font-family:var(--mono);font-size:14px;font-weight:500;
+             letter-spacing:.14em;text-transform:uppercase;color:var(--accent);
+             margin-bottom:12px">One connection</div>
+        <p>To your discipline, your work, or your own life.</p>
       </div>
-      <div class="f card">
-        <div class="ct">&#9650;&nbsp; One question</div>
-        <p class="sm">That may spark curiosity in others.</p>
+      <div class="f">
+        <div class="ct" style="font-family:var(--mono);font-size:14px;font-weight:500;
+             letter-spacing:.14em;text-transform:uppercase;color:var(--accent);
+             margin-bottom:12px">One question</div>
+        <p>That may spark curiosity in others.</p>
       </div>
+    </div>
+    <!-- the three marks, each centred on the boundary -->
+    <div style="position:absolute;left:64px;right:64px;top:333px;
+         display:grid;grid-template-columns:repeat(3,1fr);gap:64px;z-index:5">
+      <div style="font-size:24px;color:var(--accent);background:var(--paper);
+           width:44px;text-align:center;padding:4px 0">&#9679;</div>
+      <div style="font-size:24px;color:var(--accent);background:var(--paper);
+           width:44px;text-align:center;padding:4px 0">&#9632;</div>
+      <div style="font-size:24px;color:var(--accent);background:var(--paper);
+           width:44px;text-align:center;padding:4px 0">&#9650;</div>
     </div>
   </div>
 </section>
 
-<!-- 14 - START ---------------------------------------------------------- -->
-<section class="slide act3" aria-label="Start, scan the code">
-  <div class="seam"></div>
-  <div class="seam-label">Start &middot; <span class="pos">14</span></div>
+<!-- 14 - START ----------------------------------------------------------
+     VERTICAL at 760, with the QR panel straddling it. The code is the thing
+     that carries them across, so the code is the thing that crosses. -->
+<section class="slide" aria-label="Start, scan the code"
+  style="background:linear-gradient(to right,var(--paper) 0 760px,var(--field) 760px 100%)">
+  <div class="b bv" style="left:760px"></div>
+  <div class="seam-label">Start &middot; 14</div>
   <div class="pad">
-    <div class="col" style="left:64px;right:520px;top:150px">
+    <div class="col" style="left:64px;width:600px;top:186px">
       <p class="statement">Everything you need<br>is in the <span class="accent">app.</span></p>
-      <p style="margin-top:32px">Scan the code, or type the address.</p>
-      <p class="eyebrow" style="margin-top:30px;line-height:1.8">
-        <span id="appurl">tomhagiladi.github.io/crossing&#8209;boundaries&#8209;2026</span>
+      <p style="margin-top:38px">Scan the code, or type the address.</p>
+      <p class="eyebrow" style="margin-top:34px;line-height:1.9">
+        tomhagiladi.github.io/crossing&#8209;boundaries&#8209;2026
       </p>
-      <p class="eyebrow" style="margin-top:22px;line-height:1.8">
+      <p class="eyebrow" style="margin-top:26px;line-height:1.9">
         Questions afterwards<br>amnonglassner55@gmail.com
       </p>
     </div>
-    <div class="col" style="right:64px;top:176px;width:360px;height:360px;
+    <div class="col" style="left:640px;top:180px;width:360px;height:360px;
          background:var(--paper);border:2px solid var(--ink);display:flex;
          align-items:center;justify-content:center;z-index:5">
       <!--QR_SVG-->
@@ -547,9 +597,6 @@ body.static #bar,body.static #num,body.static #help{display:none}
 <script>
 (function(){
   const deck=document.getElementById('deck'), slides=[...deck.querySelectorAll('.slide')];
-  // Static mode short-circuits the whole presenter engine.
-  //   ?static=1  every slide stacked, for the PDF
-  //   ?slide=N   one slide, every fragment revealed, for verification shots
   const q=new URLSearchParams(location.search);
   if(q.has('static')||q.has('slide')){
     document.body.classList.add('static');
@@ -574,8 +621,8 @@ body.static #bar,body.static #num,body.static #help{display:none}
   function next(){ if(fi<frags().length){ fi++; } else if(si<slides.length-1){ si++; fi=0; } render(); }
   function prev(){ if(fi>0){ fi--; } else if(si>0){ si--; fi=frags().length; } render(); }
   function goto(n){ si=Math.max(0,Math.min(slides.length-1,n)); fi=frags().length; render(); }
-  // LTR English: Right = forward, Left = back. Same mapping the Hebrew decks
-  // use, so nothing changes here - verified rather than assumed.
+  // LTR English: Right = forward, Left = back - the same mapping the Hebrew
+  // decks use, verified rather than assumed.
   document.addEventListener('keydown', e=>{
     switch(e.key){
       case 'ArrowRight': case 'PageDown': case ' ': case 'Enter': e.preventDefault(); next(); break;
