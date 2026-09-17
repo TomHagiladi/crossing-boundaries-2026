@@ -189,18 +189,18 @@ body.static #bar,body.static #num,body.static #help{display:none}
     <div class="f">
       <div class="pin onfield" style="left:169px;top:276px">01</div>
       <p class="col" style="left:268px;right:72px;top:276px">
-        <strong>Cultures, regions, professions,</strong> and communities.</p>
+        <strong class="accent">Cultures, regions, professions,</strong> and communities.</p>
     </div>
     <div class="f">
       <div class="pin onfield" style="left:169px;top:412px">02</div>
       <p class="col" style="left:268px;right:72px;top:412px">
-        <strong>Ways of learning:</strong> observing, questioning, experiencing,
+        <strong class="accent">Ways of learning:</strong> observing, questioning, experiencing,
         dialoguing, reflecting.</p>
     </div>
     <div class="f">
       <div class="pin onfield" style="left:169px;top:548px">03</div>
       <p class="col" style="left:268px;right:72px;top:548px">
-        <strong>Modes of expression:</strong> text, image, map, story, podcast, video.</p>
+        <strong class="accent">Modes of expression:</strong> text, image, map, story, podcast, video.</p>
     </div>
   </div>
 </section>
@@ -220,16 +220,19 @@ body.static #bar,body.static #num,body.static #help{display:none}
          integrated numerically: the light region above is centred on
          (487, 211), the region below on (793, 509). Each block sits on its
          own centroid rather than being placed by eye. -->
-    <div class="col" style="left:177px;top:96px;width:620px">
+    <div class="col" style="left:64px;top:80px;width:600px">
       <p class="statement">
         The workshop invites<br><span class="accent">movement across</span><br>
         content, method,<br>perspective, and media.
       </p>
     </div>
     <div class="col" style="left:558px;top:304px;width:470px;height:410px;z-index:2">
-      <img class="ill" src="assets/gen/threshold.png"
-           alt="A single continuous route climbs diagonally, passes through a freestanding
-                doorway and carries on unbroken, with three figures at three stages of it.">
+      <!-- The doorway route is kept at assets/alt/threshold_keyed.png; swap the
+           src back to restore it. -->
+      <img class="ill" src="assets/gen/crossing.png"
+           alt="Four panels side by side, each filled with a different kind of mark - lines of
+                writing, a framed image, map contours, a sound waveform - with one continuous
+                line running straight through all four.">
     </div>
   </div>
 </section>
@@ -249,7 +252,7 @@ body.static #bar,body.static #num,body.static #help{display:none}
     </div>
     <div class="col" style="left:64px;width:600px;top:318px">
       <p class="f statement" style="font-size:44px">
-        Participants are not only<br>receivers of content.
+        Participants are not only<br><span class="accent">receivers</span> of content.
       </p>
       <p class="f statement" style="font-size:44px;margin-top:32px">
         They become <span class="accent">designers</span><br>of a short learning journey.
@@ -269,60 +272,61 @@ body.static #bar,body.static #num,body.static #help{display:none}
      through the words "Emerging understanding" at an arbitrary height, which
      is the collision Tom pointed at. -->
 <section class="slide" aria-label="The learner, GenAI and learning companion triangle"
-  style="background:linear-gradient(to bottom,var(--paper) 0 572px,var(--field) 572px 100%)">
-  <div class="b bh" style="top:572px"></div>
+  style="background:linear-gradient(to bottom,var(--paper) 0 628px,var(--field) 628px 100%)">
+  <div class="b bh" style="top:628px"></div>
   <div class="seam-label">Core Idea &middot; 06</div>
   <div class="pad">
     <div class="head">
       <div class="eyebrow">Core Idea</div>
       <h2>Three partners, one emerging understanding</h2>
     </div>
-    <!-- A true equilateral: base 390, so height is 390*sqrt(3)/2 = 337.7. The
-         apex stays where it was at vy 84, so the base falls to vy 422, which is
-         page y 572 - and that is where the boundary is drawn. The SVG does not
-         draw the base; the boundary IS the base. Edge names now sit beneath
-         their own vertex instead of running along the strokes. -->
-    <svg viewBox="0 0 1152 560" style="position:absolute;left:64px;top:150px;
-         width:1152px;height:560px;z-index:4" role="img"
-         aria-label="An equilateral triangle whose vertices are Learners, GenAI and Learning
-                     companion, with Emerging understanding at the centre. Its base rests on
-                     the slide boundary line.">
+
+    <!-- Rebuilt. The first version stacked three lines of label under every
+         vertex, which capped the triangle at 390px wide on a 1280px slide and
+         left the thing marooned in white space. Moving the two base labels OUT
+         to the sides frees the diagram to grow to 460, and the side blocks then
+         straddle the boundary instead of hiding under it.
+         Equilateral, verified: base 870-410 = 460, height 628-230 = 398,
+         and 460 * sqrt(3)/2 = 398.4. The base is not drawn - it IS the
+         boundary line. -->
+    <svg viewBox="0 0 1280 720" style="position:absolute;inset:0;width:1280px;
+         height:720px;z-index:3" role="img" aria-hidden="true">
       <g class="f">
-        <line x1="576" y1="84" x2="381" y2="422" stroke="#15171C" stroke-width="3.5"/>
-        <line x1="576" y1="84" x2="771" y2="422" stroke="#15171C" stroke-width="3.5"/>
-        <circle cx="576" cy="84" r="8" fill="#1E4B8F"/>
-        <circle cx="381" cy="422" r="8" fill="#1E4B8F"/>
-        <circle cx="771" cy="422" r="8" fill="#1E4B8F"/>
-      </g>
-      <g class="f" font-family="IBM Plex Sans" fill="#15171C" text-anchor="middle">
-        <text x="576" y="12" font-size="15" fill="#474C56"
-              font-family="IBM Plex Mono" letter-spacing="1.6">GENERATE THE LEARNING</text>
-        <text x="576" y="46" font-size="29" font-weight="600">Learners</text>
-        <text x="576" y="70" font-size="15" fill="#1E4B8F"
-              font-family="IBM Plex Mono" letter-spacing="1.6">CHALLENGE</text>
-      </g>
-      <g class="f" font-family="IBM Plex Sans" fill="#15171C" text-anchor="middle">
-        <text x="381" y="462" font-size="15" fill="#474C56"
-              font-family="IBM Plex Mono" letter-spacing="1.6">A DIALOGIC PARTNER</text>
-        <text x="381" y="496" font-size="29" font-weight="600">GenAI</text>
-        <text x="381" y="522" font-size="15" fill="#1E4B8F"
-              font-family="IBM Plex Mono" letter-spacing="1.6">DIALOGUE</text>
-        <text x="771" y="462" font-size="15" fill="#474C56"
-              font-family="IBM Plex Mono" letter-spacing="1.6">REVEALS CURIOSITY</text>
-        <text x="771" y="496" font-size="29" font-weight="600">Learning companion</text>
-        <text x="771" y="522" font-size="15" fill="#1E4B8F"
-              font-family="IBM Plex Mono" letter-spacing="1.6">REFLECTION</text>
-      </g>
-      <g class="f" text-anchor="middle">
-        <text x="576" y="300" font-size="26" font-weight="600"
-              font-family="Fraunces" fill="#15171C">Emerging</text>
-        <text x="576" y="332" font-size="26" font-weight="600"
-              font-family="Fraunces" fill="#15171C">understanding</text>
+        <line x1="640" y1="250" x2="422" y2="628" stroke="#15171C" stroke-width="3.5"/>
+        <line x1="640" y1="250" x2="858" y2="628" stroke="#15171C" stroke-width="3.5"/>
+        <circle cx="640" cy="250" r="9" fill="#1E4B8F"/>
+        <circle cx="422" cy="628" r="9" fill="#1E4B8F"/>
+        <circle cx="858" cy="628" r="9" fill="#1E4B8F"/>
       </g>
     </svg>
-    <!-- Bottom LEFT. Centred, it landed exactly between DIALOGUE and
-         REFLECTION, which both sit low on the base vertices. -->
-    <p class="eyebrow" style="position:absolute;left:64px;bottom:34px">
+
+    <!-- apex -->
+    <div class="f col" style="left:0;right:0;top:140px;text-align:center">
+      <div class="eyebrow">Generate the learning</div>
+      <div style="font-size:30px;font-weight:600;margin-top:8px">Learners</div>
+      <div class="eyebrow" style="color:var(--accent);margin-top:8px">Challenge</div>
+    </div>
+
+    <!-- base vertices, pushed out to the sides so the triangle can breathe;
+         each block is centred on the boundary and therefore crosses it -->
+    <div class="f col" style="left:64px;width:316px;top:580px;text-align:right">
+      <div class="eyebrow">A dialogic partner</div>
+      <div style="font-size:30px;font-weight:600;margin-top:6px">GenAI</div>
+      <div class="eyebrow" style="color:var(--accent);margin-top:6px">Dialogue</div>
+    </div>
+    <div class="f col" style="left:900px;width:316px;top:580px;text-align:left">
+      <div class="eyebrow">Reveals curiosity</div>
+      <div style="font-size:30px;font-weight:600;margin-top:6px">Learning companion</div>
+      <div class="eyebrow" style="color:var(--accent);margin-top:6px">Reflection</div>
+    </div>
+
+    <!-- the centre -->
+    <div class="f col" style="left:0;right:0;top:438px;text-align:center">
+      <div style="font-family:var(--display);font-size:29px;font-weight:600;
+                  line-height:1.24">Emerging<br>understanding</div>
+    </div>
+
+    <p class="eyebrow" style="position:absolute;left:0;right:0;text-align:center;bottom:30px">
       Hagiladi &amp; Glassner, 2026
     </p>
   </div>
@@ -555,21 +559,21 @@ body.static #bar,body.static #num,body.static #help{display:none}
          square appears in the app and on the projected board. -->
     <div class="f">
       <div class="pin" style="left:207px;top:334px;font-size:19px">&#9632;</div>
-      <div class="col" style="left:64px;width:341px;top:400px">
+      <div class="col" style="left:64px;width:341px;top:400px;text-align:center">
         <div class="ct">One insight</div>
         <p>From what you learned, or from the process itself.</p>
       </div>
     </div>
     <div class="f">
       <div class="pin" style="left:612px;top:334px;font-size:19px">&#9632;</div>
-      <div class="col" style="left:469px;width:341px;top:400px">
+      <div class="col" style="left:469px;width:341px;top:400px;text-align:center">
         <div class="ct">One connection</div>
         <p>To your discipline, your work, or your own life.</p>
       </div>
     </div>
     <div class="f">
       <div class="pin" style="left:1017px;top:334px;font-size:19px">&#9632;</div>
-      <div class="col" style="left:875px;width:341px;top:400px">
+      <div class="col" style="left:875px;width:341px;top:400px;text-align:center">
         <div class="ct">One question</div>
         <p>That may spark curiosity in others.</p>
       </div>
