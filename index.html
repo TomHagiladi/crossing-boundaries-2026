@@ -150,12 +150,6 @@ nav.bottom{position:fixed;inset-inline:0;bottom:0;z-index:20;background:var(--pa
   <div class="eyebrow" data-i="s0eye"></div>
   <h1 id="t0" data-i="s0title"></h1>
   <p class="lead" data-i="s0lead"></p>
-  <div class="card">
-    <div class="ct" data-i="s0groupct"></div>
-    <label for="gname" data-i="s0namelbl"></label>
-    <input type="text" id="gname" maxlength="40" autocomplete="off">
-    <p class="muted" style="margin-top:9px" data-i="s0namehint"></p>
-  </div>
   <div class="note"><b data-i="s0noteb"></b> <span data-i="s0note"></span></div>
 </section>
 
@@ -303,7 +297,7 @@ nav.bottom{position:fixed;inset-inline:0;bottom:0;z-index:20;background:var(--pa
 
 <!-- No Firebase here any more. The share station was removed on 24.9, and
      with it the only part of this app that ever touched the network. The
-     config file still ships for board.html. -->
+     projected board and its config file were retired on 6.10. -->
 <script>
 /* ============================================================
    Crossing Learning Boundaries - workshop companion
@@ -325,9 +319,6 @@ const STR = {
 
   s0eye:"Welcome", s0title:"A short crossing",
   s0lead:"Over the next half hour you will start a learning journey of your own choosing, with generative AI as a partner rather than an answer machine. This page walks with you. Nothing here is graded and nothing is collected.",
-  s0groupct:"Your group",
-  s0namelbl:"Name your pair or triad",
-  s0namehint:"Anything you like. It stays on your own phone.",
   s0noteb:"One thing to know.",
   s0note:"The goal is to experience a short heutagogical learning, not to produce a perfect answer.",
 
@@ -399,9 +390,6 @@ const STR = {
 
   s0eye:"ברוכים הבאים", s0title:"חצייה קצרה",
   s0lead:"בחצי השעה הקרובה תצאו למסע למידה שאתם בוחרים, עם בינה מלאכותית כשותפה לחשיבה ולא כמכונת תשובות. הדף הזה הולך איתכם. אין כאן ציון ולא נאסף שום דבר.",
-  s0groupct:"הקבוצה שלכם",
-  s0namelbl:"שם לזוג או לשלשה",
-  s0namehint:"מה שבא לכם. זה נשאר על הטלפון שלכם.",
   s0noteb:"דבר אחד שכדאי לדעת.",
   s0note:"המטרה היא לחוות למידה יוטגוגית קצרה, לא להגיע לתשובה מושלמת.",
 
@@ -612,13 +600,11 @@ addEventListener('resize', paintDevice);
 $$('[data-copy]').forEach(b => b.addEventListener('click', () => {
   doCopy(b, STR[lang][b.dataset.copy]);
 }));
-$('#gname').addEventListener('input', e => store.set('gname', e.target.value));
 
 /* restore */
 lang = store.get('lang', 'en');
 mode = store.get('mode', null);
 if (mode) $$('.choice').forEach(o => o.setAttribute('aria-pressed', String(o.dataset.mode === mode)));
-$('#gname').value = store.get('gname', '');
 paintDevice();
 paint();
 go(store.get('s', 0));
